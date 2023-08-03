@@ -1,0 +1,94 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "imageUrl": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230725213049_64bfdc99c80e0.jpg",
+      "name": "Jam Your Playlist : A Tribute Night to JYP Entertainment",
+      "date": "05 Aug 2023",
+      "time": "19:00 - 23:30 WIB",
+      "location": "Jakarta",
+      "category": "Music",
+      "price": 125000
+    },
+    {
+      "id": 2,
+      "imageUrl": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230728150533_64c376cd51004.jpg",
+      "name": "Speak Your Mind, Win Your Stage! with Rizqiani Putri",
+      "date": "12 Aug 2023",
+      "time": "09:00 - 18:00 WIB",
+      "location": "Braga",
+      "category": "Karir",
+      "price": 600000
+    },
+    {
+      "id": 3,
+      "imageUrl": "",
+      "name": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "category": "",
+      "price": ""
+    },
+    {
+      "id": 3,
+      "imageUrl": "",
+      "name": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "category": "",
+      "price": ""
+    },
+    {
+      "id": 3,
+      "imageUrl": "",
+      "name": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "category": "",
+      "price": ""
+    },
+    {
+      "id": 3,
+      "imageUrl": "",
+      "name": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "category": "",
+      "price": ""
+    },
+    {
+      "id": 3,
+      "imageUrl": "",
+      "name": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "category": "",
+      "price": ""
+    },
+    {
+      "id": 3,
+      "imageUrl": "",
+      "name": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "category": "",
+      "price": ""
+    },
+    {
+      "id": 3,
+      "imageUrl": "",
+      "name": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "category": "",
+      "price": ""
+    }
+  ]
+}
