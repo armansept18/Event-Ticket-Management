@@ -421,6 +421,20 @@
       ]
     }
   ],
+  "carousel": [
+    {
+      "id": 1,
+      "imageCarousel": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230726093502.jpg"
+    },
+    {
+      "id": 2,
+      "imageCarousel": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230727015648.png"
+    },
+    {
+      "id": 3,
+      "imageCarousel": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230724124852.png"
+    }
+  ],
   "users": [
     {
       "id": 1,

@@ -1,19 +1,20 @@
 import logo from "./logo.svg";
 import "./App.css";
-import LargeWithLogoLeft from "./components/footer";
-import { useState } from "react";
-import { EventListPage } from "./pages/eventPage";
-import { Navbar } from "./components/navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Dashboard } from "./pages/dashboard";
+import Redirect from "./pages/redirect";
+import { EventDetail } from "./pages/eventDetail";
+import "./css/style.css";
 
 function App() {
-  const [search, setSearch] = useState("");
+  
   return (
     <>
-    <Navbar search={search} setSearch={setSearch}/>
-      <EventListPage search={search} />
-      <div>
-        <LargeWithLogoLeft />
-      </div>
+      <Routes>
+        <Route path="home" element={<Dashboard />} />
+        <Route path="event-detail/:eventId" element={<EventDetail />} />
+        <Route path="" element={<Redirect />} />
+      </Routes>
     </>
   );
 }
