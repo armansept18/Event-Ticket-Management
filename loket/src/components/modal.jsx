@@ -34,6 +34,7 @@ export const BasicModal = ({
         }
   );
   useEffect(() => {
+    console.log('Product :>> ', Product);
     setData(Product);
   }, [Product]);
 
