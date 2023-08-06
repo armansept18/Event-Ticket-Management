@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LoadingPage from "../components/loading";
 import { api } from "../api/axios";
-import { Navbar } from "../components/navbar";
+import Navbar from "../components/navbar";
 
 export const EventDetail = () => {
   const { eventId } = useParams();
@@ -74,16 +74,19 @@ export const EventDetail = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center" style={{marginTop:"60px", gap:"50px"}}>
+        <div
+          className="flex justify-center"
+          style={{ marginTop: "60px", gap: "50px" }}
+        >
           <p style={{ maxWidth: "720px" }}>{eventDetails.description}</p>
           <button
             style={{
               border: "1px solid #e5e5e5",
               borderRadius: "20px",
               width: "312px",
-              height:"48px",
+              height: "48px",
               backgroundColor: "#0049CC",
-              color:"white",
+              color: "white",
             }}
             onClick={"beliTiket"}
           >
