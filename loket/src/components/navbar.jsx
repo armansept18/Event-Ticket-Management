@@ -21,7 +21,11 @@ import { Search2Icon } from "@chakra-ui/icons";
 import { CalendarIcon } from "@chakra-ui/icons";
 import { BasicModal } from "./modal";
 
-export default function Navbar({ setSearch }) {
+export default function Navbar(props) {
+  const token = localStorage.getItem("auth");
+  console.log("token :>> ", token);
+  const { setSearch } = props;
+  console.log("props :>> ", props);
   const { onOpen, onClose, isOpen } = useDisclosure();
 
   return (
@@ -54,8 +58,10 @@ export default function Navbar({ setSearch }) {
           <Input
             type="tel"
             placeholder="Cari event seru disini "
-            onKeyPress={(e) => {
-              if (e.key == "Enter") setSearch(e.target.value);
+            onChange={(e) => {
+              console.log("search input :>> ", e);
+              // if (e.key === "Enter")
+              setSearch(e.target.value);
             }}
           />
         </InputGroup>
@@ -66,6 +72,7 @@ export default function Navbar({ setSearch }) {
           marginLeft={"20px"}
           spacing={4}
         >
+          {token && (
           <div
             style={{
               display: "flex",
@@ -76,40 +83,65 @@ export default function Navbar({ setSearch }) {
             }}
           >
             <CalendarIcon onClick={onOpen} />
-            <Stack display={{ base: "none", md: "flex" }}>
-              <span
-                onClick={onOpen}
-                style={{ fontSize: "13px", paddingLeft: "5px" }}
-              >
-                {" "}
-                Create event
-              </span>
-            </Stack>
+            
+              <Stack display={{ base: "none", md: "flex" }}>
+                <span
+                  onClick={onOpen}
+                  style={{ fontSize: "13px", paddingLeft: "5px" }}
+                >
+                  {" "}
+                  Create event
+                </span>
+              </Stack>
+            
           </div>
-          <Button
-            as={"a"}
-            fontWeight={600}
-            href={"/login"}
-            textDecoration={"none"}
-            color={"white"}
-            bg={"#0049CC"}
-          >
-            Masuk
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"#0049CC"}
-            href={"/register"}
-            _hover={{
-              bg: "white",
-            }}
-          >
-            Daftar
-          </Button>
+          )}
+          {token && (
+            <>
+              <Button
+                as={"a"}
+                fontWeight={600}
+                // href={"/logout"}
+                textDecoration={"none"}
+                color={"white"}
+                bg={"#0049CC"}
+                onClick={() => {
+                  localStorage.removeItem("auth");
+                  window.location.reload();
+                }}
+              >
+                Keluar
+              </Button>
+            </>
+          )}
+          {!token && (
+            <>
+              <Button
+                as={"a"}
+                fontWeight={600}
+                href={"/login"}
+                textDecoration={"none"}
+                color={"white"}
+                bg={"#0049CC"}
+              >
+                Masuk
+              </Button>
+              <Button
+                as={"a"}
+                display={{ base: "none", md: "inline-flex" }}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"#0049CC"}
+                href={"/register"}
+                _hover={{
+                  bg: "white",
+                }}
+              >
+                Daftar
+              </Button>
+            </>
+          )}
         </Stack>
       </Flex>
 

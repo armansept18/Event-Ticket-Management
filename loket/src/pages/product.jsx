@@ -1,4 +1,6 @@
 import { useDisclosure } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+
 
 export const ProductListPage = ({ search }) => {
   const [products, setProducts] = useState([]);

@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LoadingPage from "../components/loading";
 import { api } from "../api/axios";
+import {
+  Badge,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import Navbar from "../components/navbar";
 
 export const EventDetail = () => {
@@ -31,69 +42,110 @@ export const EventDetail = () => {
     return <div>Event not found</div>;
   }
   return (
-    <>
-      <Navbar />
-      <div className="justify-center">
-        <p>Category: {eventDetails.category}</p>
-        <div className="flex justify-center gap-10 flex-wrap">
-          <img
+    <Center py={6}>
+      <Stack
+        borderWidth="1px"
+        borderRadius="lg"
+        w={{ sm: "100%", md: "1440px" }}
+        height={{ sm: "476px", md: "45rem" }}
+        direction={{ base: "column", md: "row" }}
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        bg={useColorModeValue("white", "gray.900")}
+        boxShadow={"2xl"}
+        padding={4}
+      >
+        <Flex flex={1} bg="gray.200">
+          <Image
+            objectFit="contain"
+            boxSize="100%"
             src={eventDetails.imageUrl}
             alt={eventDetails.eventName}
-            style={{
-              borderRadius: "20px",
-              maxWidth: "800px",
-              height: "376px",
-            }}
           />
-          <div
-            className="flex flex-col justify-center items-start"
-            style={{ border: "1px solid #e5e5e5", borderRadius: "20px" }}
-          >
-            <span style={{ fontSize: "22px", marginBottom: "25px" }}>
-              {eventDetails.eventName}
-            </span>
-            <div
-              className="flex flex-col justify-center gap-5"
-              style={{ fontSize: "16px" }}
-            >
-              <span>
-                <img src="#" alt="" />
-                <p>{eventDetails.date}</p>
-              </span>
-              <span>
-                <img src="#" alt="" />
-                <p>{eventDetails.time}</p>
-              </span>
-              <span>
-                <img src="#" alt="" />
-                <p>{eventDetails.location}</p>
-              </span>
-              <span className=" font-semibold">
-                Price: Rp {Number(eventDetails.price).toLocaleString("id-ID")}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="flex justify-center"
-          style={{ marginTop: "60px", gap: "50px" }}
+        </Flex>
+        <Stack
+          flex={1}
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          p={1}
+          pt={2}
         >
-          <p style={{ maxWidth: "720px" }}>{eventDetails.description}</p>
-          <button
-            style={{
-              border: "1px solid #e5e5e5",
-              borderRadius: "20px",
-              width: "312px",
-              height: "48px",
-              backgroundColor: "#0049CC",
-              color: "white",
-            }}
-            onClick={"beliTiket"}
+          <Heading fontSize={"2xl"} fontFamily={"BasierCircle"}>
+            {eventDetails.eventName}
+          </Heading>
+          <Text fontWeight={600} color={"gray.500"} size="sm" mb={4}>
+            {eventDetails.category}
+          </Text>
+          <Text textAlign={"justify"} color={("gray.700", "gray.400")} px={3}>
+            {eventDetails.description}
+          </Text>
+          <Text>
+            Price: Rp {Number(eventDetails.price).toLocaleString("id-ID")}
+          </Text>
+          <Stack
+            align={"center"}
+            justify={"center"}
+            direction={"column"}
+            mt={6}
           >
-            Beli Tiket
-          </button>
-        </div>
-      </div>
-    </>
+            <Badge
+              px={2}
+              py={1}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              bg={useColorModeValue("gray.50", "gray.800")}
+              fontWeight={"400"}
+            >
+              {eventDetails.date}
+            </Badge>
+            <Badge
+              px={2}
+              py={1}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              bg={useColorModeValue("gray.50", "gray.800")}
+              fontWeight={"400"}
+            >
+              {eventDetails.time}
+            </Badge>
+            <Badge
+              px={2}
+              py={1}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              bg={useColorModeValue("gray.50", "gray.800")}
+              fontWeight={"400"}
+            >
+              {eventDetails.location}
+            </Badge>
+          </Stack>
+
+          <Stack
+            width={"100%"}
+            mt={"2rem"}
+            direction={"row"}
+            padding={2}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Button
+              flex={1}
+              fontSize={"sm"}
+              rounded={"full"}
+              bg={"blue.400"}
+              color={"white"}
+              boxShadow={
+                "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
+              }
+              _hover={{
+                bg: "blue.500",
+              }}
+              _focus={{
+                bg: "#0049CC",
+              }}
+            >
+              Beli Tiket
+            </Button>
+          </Stack>
+        </Stack>
+      </Stack>
+    </Center>
   );
 };

@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { Dashboard } from "./pages/dashboard";
+import { Dashboard } from "./pages/homepage";
 import Redirect from "./pages/redirect";
 import { EventDetail } from "./pages/eventDetail";
 import Register from "./pages/register";
@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 function App() {
   const location = useLocation();
   const [search, setSearch] = useState("");
+  console.log("search :>> ", search);
+
   return (
     <>
       {location.pathname !== "/login" && location.pathname !== "/register" && (
