@@ -70,7 +70,7 @@
       "date": "05 Aug - 06 Aug 2023",
       "time": "13:00 - 23:00 WIB",
       "location": "Karanganyar",
-      "description": "PROJEK-D merupakan sebutan singkat dari Projek Dynamic (Dyandra Music & Collaborations), melalui Projek-D, Dyandra Promosindo ingin mempersembahkan festival musik yang dapat dinikmati oleh seluruh kalangan. Sejalan dengan gairah tersebut demi menciptakan ekosistem dan pengalaman baru bagi para pegiat hingga penikmat musik, khususnya yang berada di luar Kota Jakarta. Solo yang dijuluki sebagai kota penuh nuansa sejarah dan kental dengan warisan budaya, dipilih karena memiliki berbagai macam kesenian bertaraf nasional dan internasional. Serta lokasi strategis dan berkelas yang masih mudah dijangkau oleh seluruh masyarkat Joglosemar dan sekitarnya yang kini telah direvitalisasikan menjadi tempat wisata yaitu De Tjolomadoe, yang menjadi wadah kami untuk tetap mempertahankan nilai kekayaan historikal yang ada. Melalui slogan #SehidupSeparty Projek-D ingin menyampaikan kebahagiaan bisa diciptakan melalui suguhan karya musik dengan beragam aksi eksentrik dari para musisi pilihan tanah air. Hadirnya Projek-D vol. 1 membuktikan bahwa pengalaman baru dari festival musik yang menyajikan lebih dari satu panggung, memberikan dampak positif bagi generasi muda dalam menyaksikan gelaran musik yang berkualitas. Projek-D vol.2 kembali hadir dengan konsep yang lebih segar, mengusung tema “Pop of Circus” selain memberikan pengalaman baru dalam menikmati festival musik dihari penyelenggaraan, tentunya Projek-D membayar kesetiaan pengunjung Projek-D dengan berbagai kejutan di dalamnya. Deretan program seperti CEKSON dan KELAS MUSIK kami suguhkan dalam rangkaian pre-event guna menjadi wadah edukasi untuk para musisi baru. Inilah usaha kami dalam memberikan “nuansa baru” dalam suguhan festival musik.",
+      "description": "PROJEK-D merupakan sebutan singkat dari Projek Dynamic (Dyandra Music & Collaborations), melalui Projek-D, Dyandra Promosindo ingin mempersembahkan festival musik yang dapat dinikmati oleh seluruh kalangan. Sejalan dengan gairah tersebut demi menciptakan ekosistem dan pengalaman baru bagi para pegiat hingga penikmat musik, khususnya yang berada di luar Kota Jakarta. Solo yang dijuluki sebagai kota penuh nuansa sejarah dan kental dengan warisan budaya, dipilih karena memiliki berbagai macam kesenian bertaraf nasional dan internasional.",
       "category": "Musik",
       "price": 100000,
       "ticket-category": [
@@ -441,6 +441,7 @@
       "name": "Admin1",
       "email": "admin1@mail.com",
       "password": "administrator",
+      "credit": 500000,
       "referralCode": ""
     },
     {
@@ -448,6 +449,7 @@
       "name": "Admin2",
       "email": "admin2@mail.com",
       "password": "administrator",
+      "credit": 500000,
       "referralCode": ""
     },
     {
@@ -455,6 +457,7 @@
       "name": "Admin3",
       "email": "admin3@mail.com",
       "password": "administrator",
+      "credit": 500000,
       "referralCode": ""
     }
   ]

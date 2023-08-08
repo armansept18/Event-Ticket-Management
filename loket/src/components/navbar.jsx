@@ -23,9 +23,7 @@ import { BasicModal } from "./modal";
 
 export default function Navbar(props) {
   const token = localStorage.getItem("auth");
-  console.log("token :>> ", token);
   const { setSearch } = props;
-  console.log("props :>> ", props);
   const { onOpen, onClose, isOpen } = useDisclosure();
 
   return (
@@ -39,8 +37,8 @@ export default function Navbar(props) {
         borderStyle={"solid"}
         align={"center"}
       >
-        a
-        <div
+        <a
+          href="/home"
           style={{
             width: "50px",
             height: "50px",
@@ -50,7 +48,7 @@ export default function Navbar(props) {
           }}
         >
           <img src={Loket} alt="" />
-        </div>
+        </a>
         <InputGroup left={"3"} color={"white"} maxWidth={"55%"}>
           <InputLeftElement pointerEvents="none">
             <Search2Icon />
@@ -58,10 +56,8 @@ export default function Navbar(props) {
           <Input
             type="tel"
             placeholder="Cari event seru disini "
-            onChange={(e) => {
-              console.log("search input :>> ", e);
-              // if (e.key === "Enter")
-              setSearch(e.target.value);
+            onKeyPress={(e) => {
+              if (e.key === "Enter") setSearch(e.target.value);
             }}
           />
         </InputGroup>
@@ -73,17 +69,17 @@ export default function Navbar(props) {
           spacing={4}
         >
           {token && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            <CalendarIcon onClick={onOpen} />
-            
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "white",
+                cursor: "pointer",
+              }}
+            >
+              <CalendarIcon onClick={onOpen} />
+
               <Stack display={{ base: "none", md: "flex" }}>
                 <span
                   onClick={onOpen}
@@ -93,8 +89,7 @@ export default function Navbar(props) {
                   Create event
                 </span>
               </Stack>
-            
-          </div>
+            </div>
           )}
           {token && (
             <>
