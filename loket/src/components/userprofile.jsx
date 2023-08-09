@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Flex, Avatar, Text } from "@chakra-ui/react";
 import { api } from "../api/axios"; // Make sure to adjust the import path
+import LoadingPage from "./loading";
 
 const UserProfile = () => {
   const [userData, setUserData] = useState(null);
@@ -24,7 +25,7 @@ const UserProfile = () => {
   }, []);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <LoadingPage/>;
   }
 
   return (
