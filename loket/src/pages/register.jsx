@@ -16,6 +16,8 @@ import {
 import { api } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { types } from "../redux/reducers/types";
 
 const Register = ({ users = [], setUsers }) => {
   const nav = useNavigate();
@@ -44,8 +46,16 @@ const Register = ({ users = [], setUsers }) => {
   const InputHandler = (key, value) => {
     setUser({ ...user, [key]: value });
   };
+  const dispatch = useDispatch();
+  const userSelector = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (userSelector.id) nav("/login");
+  }, []);
   const register = async (e) => {
     e.preventDefault();
+    const auth = await api.get("/users", {
+      params: { fullname: "", email: "", password: "", referralCode: "" },
+    });
     console.log(user);
 
     const check = await api.get("/users", {
@@ -62,13 +72,17 @@ const Register = ({ users = [], setUsers }) => {
     if (user.password) {
       const tmp = { ...user };
       console.log(tmp);
-
+      delete tmp.confirmPassword;
       await api.post("/users", tmp);
       // alert("berhasil register");
       nav("/login");
     } else {
       alert("password dan confirm password tidak sesuai");
     }
+    dispatch({
+      type: types.logout,
+      payload: { ...auth.data },
+    });
   };
 
   useEffect(() => {

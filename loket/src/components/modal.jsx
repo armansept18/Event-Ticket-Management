@@ -68,6 +68,7 @@ export const BasicModal = ({
           data.imgUrl &&
           data.name &&
           data.time &&
+          data.date &&
           data.location &&
           data.category &&
           data.price
@@ -127,13 +128,15 @@ export const BasicModal = ({
                 defaultValue={data?.name}
                 onChange={inputHandler}
               ></Input>
+
               <Input
-                id="time"
-                placeholder="time"
+                placeholder="Select Date and Time"
+                size="md"
+                type="datetime-local"
                 maxW="300px"
-                defaultValue={data?.time}
+                defaultValue={data?.time && data?.da}
                 onChange={inputHandler}
-              ></Input>
+              />
               <Input
                 id="location"
                 placeholder="location"
