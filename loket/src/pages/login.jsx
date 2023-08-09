@@ -17,9 +17,11 @@ import {
   AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { types } from "../redux/reducers/types";
 
 export const SimpleCard = ({ users = [] }) => {
   const nav = useNavigate();
@@ -30,21 +32,37 @@ export const SimpleCard = ({ users = [] }) => {
   const InputHandler = (key, value) => {
     setUser({ ...user, [key]: value });
   };
+
+  const dispatch = useDispatch();
+  const userSelector = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (userSelector.id) nav("/home");
+  }, []);
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const login = async () => {
     const auth = await api.get("/users", {
       params: {
-        email: user.email,
-        password: user.password,
+        email: users.email,
+        password: users.password,
       },
     });
 
     if (!auth.data) return alert("email/password salah");
 
     delete auth.data[0].password;
+    dispatch({
+      type: types.login,
+      payload: { ...auth.data[0] },
+    });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
     localStorage.setItem("auth", JSON.stringify(auth.data[0]));
-    alert("hello");
-    nav("/dashboard");
+
+    nav("/home");
   };
 
   return (
@@ -53,7 +71,6 @@ export const SimpleCard = ({ users = [] }) => {
       align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
-       
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
