@@ -4,7 +4,7 @@ import LargeWithLogoCentered from "../components/footer";
 import Carousel from "../components/carousel";
 import Navbar from "../components/navbar";
 
-export const Dashboard = (props) => {
+export const Homepage = (props) => {
   // const [search, setSearch] = useState("");
   return (
     <>

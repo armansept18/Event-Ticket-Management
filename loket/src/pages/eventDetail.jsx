@@ -7,18 +7,36 @@ import {
   Button,
   Center,
   Flex,
+  FormControl,
+  FormLabel,
   Heading,
+  IconButton,
   Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   Text,
   useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import Navbar from "../components/navbar";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import { TransactionModal } from "../components/transactionModal";
 
 export const EventDetail = () => {
   const { eventId } = useParams();
   const [eventDetails, setEventDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [ticketQuantity, setTicketQuantity] = useState(1);
+  const [selectedTicketCategory, setSelectedTicketCategory] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -41,6 +59,14 @@ export const EventDetail = () => {
   if (!eventDetails) {
     return <div>Event not found</div>;
   }
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Center py={6}>
       <Stack
@@ -79,7 +105,7 @@ export const EventDetail = () => {
           <Text textAlign={"justify"} color={("gray.700", "gray.400")} px={3}>
             {eventDetails.description}
           </Text>
-          <Text>
+          <Text className=" font-medium">
             Price: Rp {Number(eventDetails.price).toLocaleString("id-ID")}
           </Text>
           <Stack
@@ -118,7 +144,7 @@ export const EventDetail = () => {
           </Stack>
 
           <Stack
-            width={"100%"}
+            width={"50%"}
             mt={"2rem"}
             direction={"row"}
             padding={2}
@@ -140,12 +166,18 @@ export const EventDetail = () => {
               _focus={{
                 bg: "#0049CC",
               }}
+              onClick={handleOpenModal}
             >
               Beli Tiket
             </Button>
           </Stack>
         </Stack>
       </Stack>
+      <TransactionModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        eventDetails={eventDetails}
+      />
     </Center>
   );
 };
