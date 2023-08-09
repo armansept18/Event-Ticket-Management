@@ -3,13 +3,10 @@
 import {
   Box,
   Flex,
-  Text,
-  IconButton,
   Button,
   Stack,
   Collapse,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
   InputGroup,
   InputLeftElement,
@@ -19,6 +16,8 @@ import { Input } from "@chakra-ui/react";
 import Loket from "../assets/loket.png";
 import { Search2Icon } from "@chakra-ui/icons";
 import { CalendarIcon } from "@chakra-ui/icons";
+
+import user from "../assets/user.png";
 import { BasicModal } from "./modal";
 
 export default function Navbar(props) {
@@ -39,7 +38,6 @@ export default function Navbar(props) {
         borderStyle={"solid"}
         align={"center"}
       >
-        a
         <div
           style={{
             width: "50px",
@@ -73,17 +71,17 @@ export default function Navbar(props) {
           spacing={4}
         >
           {token && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            <CalendarIcon onClick={onOpen} />
-            
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "white",
+                cursor: "pointer",
+              }}
+            >
+              <CalendarIcon onClick={onOpen} />
+
               <Stack display={{ base: "none", md: "flex" }}>
                 <span
                   onClick={onOpen}
@@ -93,8 +91,7 @@ export default function Navbar(props) {
                   Create event
                 </span>
               </Stack>
-            
-          </div>
+            </div>
           )}
           {token && (
             <>
@@ -112,6 +109,17 @@ export default function Navbar(props) {
               >
                 Keluar
               </Button>
+              <a href="/dashboard">
+                {" "}
+                <img
+                  src={user}
+                  as={Button}
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                />
+              </a>
             </>
           )}
           {!token && (

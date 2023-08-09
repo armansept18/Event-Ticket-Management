@@ -456,6 +456,14 @@
       "email": "admin3@mail.com",
       "password": "administrator",
       "referralCode": ""
+    },
+    {
+      "fullname": "arif123",
+      "email": "123@123",
+      "password": "123",
+      "refferalCode": "",
+      "id": 4
     }
-  ]
+  ],
+  "products": []
 }
