@@ -134,7 +134,7 @@ export const BasicModal = ({
                 size="md"
                 type="datetime-local"
                 maxW="300px"
-                defaultValue={data?.time && data?.date}
+                defaultValue={data?.time && data?.da}
                 onChange={inputHandler}
               />
               <Input
