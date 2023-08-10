@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "referral-codes": "^2.0.3"
   }
 }

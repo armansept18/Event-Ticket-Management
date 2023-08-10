@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import defaultImage from "../assets/loket.png";
 import { api } from "../api/axios";
+
 export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
   const [data, setData] = useState({
     id: "",
@@ -34,7 +35,6 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
       console.log(err);
     }
   };
-
   useEffect(() => {
     if (id) fetchEventById();
   }, [isOpen]);
@@ -88,6 +88,10 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
       console.log(err);
     }
   };
+  const addProducts = async () => {
+    await api.get("/events");
+  };
+  console.log(addProducts);
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>

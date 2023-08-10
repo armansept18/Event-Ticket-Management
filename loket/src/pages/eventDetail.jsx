@@ -7,26 +7,14 @@ import {
   Button,
   Center,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
-  IconButton,
   Image,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Stack,
   Text,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import Navbar from "../components/navbar";
-import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+
 import { TransactionModal } from "../components/transactionModal";
 
 export const EventDetail = () => {
@@ -34,8 +22,7 @@ export const EventDetail = () => {
   const [eventDetails, setEventDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [ticketQuantity, setTicketQuantity] = useState(1);
-  const [selectedTicketCategory, setSelectedTicketCategory] = useState(null);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState({});
 
