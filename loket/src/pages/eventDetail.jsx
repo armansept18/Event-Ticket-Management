@@ -14,18 +14,20 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-
+import { Input } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import { TransactionModal } from "../components/transactionModal";
 
 export const EventDetail = () => {
+  const userDataFromLocalStorage = JSON.parse(localStorage.getItem("auth"));
   const { eventId } = useParams();
   const [eventDetails, setEventDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState({});
-
+  console.log("user profile", user);
+  console.log("userDataFromLocalStorage eventDetail", userDataFromLocalStorage);
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
@@ -93,9 +95,27 @@ export const EventDetail = () => {
           <Text textAlign={"justify"} color={("gray.700", "gray.400")} px={3}>
             {eventDetails.description}
           </Text>
-          <Text className=" font-medium">
-            Price: Rp {Number(eventDetails.price).toLocaleString("id-ID")}
-          </Text>
+          (
+          <>
+            <Text
+              className={`font-medium ${
+                userDataFromLocalStorage?.referralCodeFromFriend
+                  ? "line-through"
+                  : ""
+              }`}
+            >
+              Price: Rp {Number(eventDetails.price).toLocaleString("id-ID")}
+            </Text>
+            {userDataFromLocalStorage?.referralCodeFromFriend && (
+              <Text className={`font-medium`}>
+                Price: Rp{" "}
+                {Number(
+                  eventDetails.price - (10 / 100) * eventDetails.price
+                ).toLocaleString("id-ID")}
+              </Text>
+            )}
+          </>
+          )
           <Stack
             align={"center"}
             justify={"center"}
@@ -130,7 +150,6 @@ export const EventDetail = () => {
               {eventDetails.location}
             </Badge>
           </Stack>
-
           <Stack
             width={"50%"}
             mt={"2rem"}
@@ -165,8 +184,8 @@ export const EventDetail = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         eventDetails={eventDetails}
-        userProfile={user}
-        updateUserProfile={setUser} 
+        userProfile={userDataFromLocalStorage}
+        updateUserProfile={setUser}
         handleOpenModal={handleOpenModal}
       />
     </Center>

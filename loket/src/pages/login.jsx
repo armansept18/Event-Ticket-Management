@@ -49,7 +49,7 @@ export const SimpleCard = ({ users = [] }) => {
     });
 
     if (!auth.data) return alert("email/password salah");
-    console.log(auth.data);
+    console.log("auth.data login", auth.data);
     delete auth.data[0].password;
     dispatch({
       type: types.login,
