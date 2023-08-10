@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import defaultImage from "../assets/loket.png";
+import { api } from "../api/axios";
 export const BasicModal = ({
   isOpen,
   onClose,
@@ -99,6 +100,10 @@ export const BasicModal = ({
     clear();
     onClose();
   };
+  const addProducts = async () => {
+    await api.get("/events");
+  };
+  console.log(addProducts);
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
