@@ -136,7 +136,7 @@
       "description": "JPCC Worship adalah tim pujian penyembahan dari Jakarta Praise Community Church (JPCC) yang awalnya dikenal dengan True Worshippers. Lagu-lagu mereka sudah dinyanyikan di seluruh Indonesia bahkan di mancanegara. Beberapa album terakhir mereka diterjemahkan ke berbagai bahasa seperti Jepang, Thai, Mandarin dan lainnya.",
       "category": "Keagamaan",
       "price": 100000,
-      "stock": 250,
+      "stock": 248,
       "createdBy": 3,
       "participants": []
     },
@@ -661,18 +661,64 @@
       "referralCode": ""
     },
     {
-      "fullname": "arif123",
+      "fullname": "test123",
       "email": "123@123",
       "password": "123",
-      "refferalCode": "",
+      "referralCode": "LPL1RU",
+      "credit": "500000",
       "id": 4
     },
     {
-      "fullname": "arif",
-      "email": "arif@mail.com",
+      "fullname": "tes123",
+      "email": "123@123",
       "password": "123",
-      "refferalCode": "",
+      "referralCode": "RBRSXQ",
+      "credit": "500000",
       "id": 5
+    },
+    {
+      "fullname": "test123",
+      "email": "1234@123",
+      "password": "123",
+      "referralCode": "UF26P2",
+      "credit": "500000",
+      "id": 6
+    },
+    {
+      "fullname": "Test",
+      "email": "test@test.com",
+      "password": "123456",
+      "referralCode": "JF3EHB",
+      "referralCodeFromFriend": "",
+      "credit": "500000",
+      "id": 7
+    },
+    {
+      "fullname": "aaa",
+      "email": "aaa@xxx.com",
+      "password": "123",
+      "referralCode": "7M35AX",
+      "referralCodeFromFriend": "JF3EHB",
+      "credit": "500000",
+      "id": 8
+    },
+    {
+      "fullname": "asdfasdf",
+      "email": "asdfasdf@sss.com",
+      "password": "test",
+      "referralCode": "8ZR8MX",
+      "referralCodeFromFriend": "adfasdfasdfasdf",
+      "credit": "500000",
+      "id": 9
+    },
+    {
+      "fullname": "admin",
+      "email": "admin@mail.com",
+      "password": "arifarifah",
+      "referralCode": "5VVU4W",
+      "referralCodeFromFriend": "JF3EHB",
+      "credit": "500000",
+      "id": 10
     }
   ]
 }

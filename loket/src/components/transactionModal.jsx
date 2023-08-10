@@ -8,11 +8,9 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  Badge,
   Flex,
   Image,
   Text,
-  useColorModeValue,
   Stack,
   Box,
 } from "@chakra-ui/react";
@@ -26,6 +24,7 @@ export const TransactionModal = ({
   updateUserProfile,
   handleOpenModal,
 }) => {
+  const userDataFromLocalStorage = JSON.parse(localStorage.getItem("auth"));
   const [ticketQuantity, setTicketQuantity] = useState(1);
 
   const handleIncreaseTicket = () => {
@@ -46,39 +45,47 @@ export const TransactionModal = ({
       : null;
 
   const handleBuyTickets = async () => {
-    const totalPrice = selectedTicketCategory?.presale * ticketQuantity;
+    const price = userDataFromLocalStorage?.referralCodeFromFriend
+      ? eventDetails?.price - (10 / 100) * eventDetails?.price
+      : eventDetails?.price;
+    console.log("price", price);
+    const totalPrice = price * ticketQuantity;
+    console.log("userDataFromLocalStorage", userDataFromLocalStorage);
+    console.log("totalPrice", totalPrice);
+    console.log("eventDetails", eventDetails);
+    console.log(
+      "userDataFromLocalStorage.credit >= totalPrice",
+      Number(userDataFromLocalStorage.credit) >= totalPrice
+    );
+    console.log(
+      "eventDetails.stock >= ticketQuantity",
+      eventDetails.stock >= ticketQuantity
+    );
 
     if (
-      userProfile.credit >= totalPrice &&
-      selectedTicketCategory.stock >= ticketQuantity
+      Number(userDataFromLocalStorage.credit) >= totalPrice &&
+      eventDetails.stock >= ticketQuantity
     ) {
       try {
-      const updatedUserProfile = {
-        ...userProfile,
-        credit: userProfile.credit - totalPrice,
-      };
+        const updatedUserProfile = {
+          ...userDataFromLocalStorage,
+          credit: Number(userDataFromLocalStorage.credit) - totalPrice,
+        };
 
-      const updatedEventDetails = {
-        ...eventDetails,
-        "ticket-category": eventDetails["ticket-category"].map((category) => {
-          if (category.presale === selectedTicketCategory.presale) {
-            return {
-              ...category,
-              stock: category.stock - ticketQuantity,
-            };
-          }
-          return category;
-        }),
-      };
+        const updatedEventDetails = {
+          ...eventDetails,
+          stock: eventDetails.stock - ticketQuantity,
+        };
 
-      updateUserProfile(updatedUserProfile);
+        updateUserProfile(updatedUserProfile);
+        console.log("updatedEventDetails", updatedEventDetails);
 
-      await api.put(`/events${eventDetails.id}`, updatedEventDetails);
-      handleOpenModal();
-      onClose();
-    } catch (error) {
-      alert("Error purchasing tickets:", error);
-    }
+        await api.put(`/events/${eventDetails.id}`, updatedEventDetails);
+        handleOpenModal();
+        onClose();
+      } catch (error) {
+        alert("Error purchasing tickets:", error);
+      }
     } else {
       alert("Insufficient credit or stock");
     }
@@ -103,17 +110,35 @@ export const TransactionModal = ({
               {eventDetails?.category}
             </Text>
             <Stack mt={4} spacing={2}>
-              <Box>
+              <Box
+                className={`${
+                  userDataFromLocalStorage?.referralCodeFromFriend
+                    ? "line-through"
+                    : ""
+                }`}
+              >
                 <Text fontWeight="bold" display="inline">
                   Presale:
                 </Text>{" "}
-                Rp {selectedTicketCategory?.presale.toLocaleString("id-ID")}
+                Rp {eventDetails?.price.toLocaleString("id-ID")}
               </Box>
+              {userDataFromLocalStorage?.referralCodeFromFriend && (
+                <Box>
+                  <Text fontWeight="bold" display="inline">
+                    Presale:
+                  </Text>{" "}
+                  Rp{" "}
+                  {(
+                    eventDetails?.price -
+                    (10 / 100) * eventDetails?.price
+                  ).toLocaleString("id-ID")}
+                </Box>
+              )}
               <Box>
                 <Text fontWeight="bold" display="inline">
                   Stock:
                 </Text>{" "}
-                {selectedTicketCategory?.stock}
+                {eventDetails?.stock}
               </Box>
             </Stack>
             <Flex mt={4}>

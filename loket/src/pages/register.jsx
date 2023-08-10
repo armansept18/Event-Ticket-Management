@@ -24,6 +24,8 @@ const Register = ({ users = [], setUsers }) => {
     email: "",
     password: "",
     referralCode: "",
+    referralCodeFromFriend: "",
+    credit: "500000",
   });
 
   const InputHandler = (key, value) => {
@@ -33,7 +35,7 @@ const Register = ({ users = [], setUsers }) => {
   // Fungsi untuk mengenerate referral code
   const generateReferralCode = () => {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const codeLength = 6; // Ubah panjang kode sesuai kebutuhan
+    const codeLength = 6;
     let referralCode = "";
 
     for (let i = 0; i < codeLength; i++) {
@@ -54,7 +56,13 @@ const Register = ({ users = [], setUsers }) => {
     e.preventDefault();
 
     const auth = await api.get("/users", {
-      params: { fullname: "", email: "", password: "", referralCode: "" },
+      params: {
+        fullname: "",
+        email: "",
+        password: "",
+        referralCode: "",
+        credit: "500000",
+      },
     });
 
     const check = await api.get("/users", {
@@ -62,32 +70,24 @@ const Register = ({ users = [], setUsers }) => {
         email: user.email,
         password: user.password,
         referralCode: user.referralCode,
+        credit: user.credit,
       },
     });
 
+    const checkReferralCode = await api.get(
+      `/users?q=${user.referralCodeFromFriend}`
+    );
+    console.log("checkReferralCode", checkReferralCode);
+
     if (check.data.length) return alert("email sudah terdaftar");
+    if (checkReferralCode.data.length === 0)
+      return alert("referral code salah");
 
     if (user.password) {
       const tmp = { ...user };
       delete tmp.confirmPassword;
-
-      // Kirim data user baru dengan referral code yang di-generate
       await api.post("/users", tmp);
 
-      // const referralDiscount = await api.get("/referral-discount", {
-      //   params: { referralCode: user.referralCode },
-      // });
-
-      // // Menerapkan potongan harga ke total pembayaran
-      // const totalPayment = calculateTotalPayment(); // Implementasikan sesuai bisnis Anda
-      // const discountedTotal = totalPayment - referralDiscount.data.amount;
-
-      // // Kirim data pembayaran yang sudah dihitung ke server
-      // await api.post("/payment", {
-      //   userId: check.data.id, // Ganti dengan id pengguna yang sudah direferensikan
-      //   totalAmount: discountedTotal,
-      // });
-      // alert("berhasil register");
       nav("/login");
     } else {
       alert("password dan confirm password tidak sesuai");
@@ -145,15 +145,18 @@ const Register = ({ users = [], setUsers }) => {
                   onChange={(e) => InputHandler("password", e.target.value)}
                 />
               </FormControl>
-              <FormControl id="referralCode">
-                <FormLabel>Refferal Code</FormLabel>
+              <FormControl id="referralCodeFromFriend">
+                <FormLabel>Referral Code</FormLabel>
                 <Input
                   type="text"
                   placeholder="Referral Code"
-                  value={user.referralCode}
-                  onChange={(e) => InputHandler("referralCode", e.target.value)}
+                  value={user.referralCodeFromFriend}
+                  onChange={(e) =>
+                    InputHandler("referralCodeFromFriend", e.target.value)
+                  }
                 />
               </FormControl>
+
               <Stack spacing={10}>
                 <Button
                   onClick={generateReferralCode}
@@ -184,5 +187,4 @@ const Register = ({ users = [], setUsers }) => {
     </Flex>
   );
 };
-
 export default Register;
