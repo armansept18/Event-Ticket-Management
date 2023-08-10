@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import { Dashboard } from "./pages/dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { types } from "./redux/reducers/types";
-import LoadingPage from "./components/loading";
 
 function App() {
   const location = useLocation();
@@ -58,7 +57,6 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="dashboard" element={<Dashboard />} />
       </Routes>
-
     </>
   );
 }
