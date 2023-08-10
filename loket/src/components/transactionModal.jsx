@@ -16,6 +16,7 @@ import {
   Stack,
   Box,
 } from "@chakra-ui/react";
+import { api } from "../api/axios";
 
 export const TransactionModal = ({
   isOpen,
@@ -23,6 +24,7 @@ export const TransactionModal = ({
   eventDetails,
   userProfile,
   updateUserProfile,
+  handleOpenModal,
 }) => {
   const [ticketQuantity, setTicketQuantity] = useState(1);
 
@@ -43,13 +45,14 @@ export const TransactionModal = ({
       ? eventDetails["ticket-category"][0]
       : null;
 
-  const handleBuyTickets = () => {
+  const handleBuyTickets = async () => {
     const totalPrice = selectedTicketCategory?.presale * ticketQuantity;
 
     if (
       userProfile.credit >= totalPrice &&
       selectedTicketCategory.stock >= ticketQuantity
     ) {
+      try {
       const updatedUserProfile = {
         ...userProfile,
         credit: userProfile.credit - totalPrice,
@@ -70,7 +73,12 @@ export const TransactionModal = ({
 
       updateUserProfile(updatedUserProfile);
 
+      await api.put(`/events${eventDetails.id}`, updatedEventDetails);
+      handleOpenModal();
       onClose();
+    } catch (error) {
+      alert("Error purchasing tickets:", error);
+    }
     } else {
       alert("Insufficient credit or stock");
     }
@@ -118,10 +126,10 @@ export const TransactionModal = ({
 
         <ModalFooter>
           <Button variant="ghost" mr={3} onClick={onClose}>
-            Close
+            Tutup
           </Button>
           <Button colorScheme="blue" onClick={handleBuyTickets}>
-            Buy Tickets
+            Beli
           </Button>
         </ModalFooter>
       </ModalContent>

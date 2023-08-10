@@ -37,6 +37,7 @@ export const EventDetail = () => {
   const [ticketQuantity, setTicketQuantity] = useState(1);
   const [selectedTicketCategory, setSelectedTicketCategory] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -177,6 +178,9 @@ export const EventDetail = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         eventDetails={eventDetails}
+        userProfile={user}
+        updateUserProfile={setUser} 
+        handleOpenModal={handleOpenModal}
       />
     </Center>
   );

@@ -115,6 +115,8 @@ export default function Navbar(props) {
                   style={{
                     width: "40px",
                     height: "40px",
+                    backgroundColor:"#e5e5e5",
+                    borderRadius: "50%"
                   }}
                 />
               </a>

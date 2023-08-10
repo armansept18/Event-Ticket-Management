@@ -42,15 +42,14 @@ export const SimpleCard = ({ users = [] }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const login = async () => {
-    const auth = await api.get("/users", {
+    const auth = await api.get(`/users`, {
       params: {
-        email: users.email,
-        password: users.password,
+        ...user,
       },
     });
 
     if (!auth.data) return alert("email/password salah");
-
+    console.log(auth.data);
     delete auth.data[0].password;
     dispatch({
       type: types.login,
@@ -61,7 +60,7 @@ export const SimpleCard = ({ users = [] }) => {
     }, 2000);
 
     localStorage.setItem("auth", JSON.stringify(auth.data[0]));
-
+    alert(`Hello`);
     nav("/home");
   };
 

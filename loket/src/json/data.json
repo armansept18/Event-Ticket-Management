@@ -419,20 +419,6 @@
           "stock": 450
         }
       ]
-    },
-    {
-      "imageUrl": "",
-      "eventName": "",
-      "date": "",
-      "time": "",
-      "location": "",
-      "description": "",
-      "category": "",
-      "price": "",
-      "ticket-category":[{
-
-      }]
-      
     }
   ],
   "carousel": [
@@ -480,6 +466,13 @@
       "password": "123",
       "refferalCode": "",
       "id": 4
+    },
+    {
+      "fullname": "arif",
+      "email": "arif@mail.com",
+      "password": "123",
+      "refferalCode": "",
+      "id": 5
     }
   ],
   "products": []
