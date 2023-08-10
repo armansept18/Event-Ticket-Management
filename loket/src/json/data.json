@@ -10,7 +10,7 @@
       "description": "SATURDAY NIGHT FOR JYP NIGHT! LET’S GO CRAZY CHINGU~",
       "category": "Musik",
       "price": 100000,
-      "stock": 1500,
+      "stock": 1498,
       "createdBy": 1,
       "participants": []
     },
@@ -52,7 +52,7 @@
       "description": "PROJEK-D merupakan sebutan singkat dari Projek Dynamic (Dyandra Music & Collaborations), melalui Projek-D, Dyandra Promosindo ingin mempersembahkan festival musik yang dapat dinikmati oleh seluruh kalangan. Sejalan dengan gairah tersebut demi menciptakan ekosistem dan pengalaman baru bagi para pegiat hingga penikmat musik, khususnya yang berada di luar Kota Jakarta. Solo yang dijuluki sebagai kota penuh nuansa sejarah dan kental dengan warisan budaya, dipilih karena memiliki berbagai macam kesenian bertaraf nasional dan internasional.",
       "category": "Musik",
       "price": 100000,
-      "stock": 500,
+      "stock": 498,
       "createdBy": 1,
       "participants": []
     },
@@ -122,7 +122,7 @@
       "description": "Untuk Anda yang ingin meningkatkan kemampuan di bidang Manajerial Sekolah. Mengulas 7 Modul Manajemen Sekolah secara aplikatif, inspiratif, dan komprehensif.",
       "category": "Bisnis",
       "price": 100000,
-      "stock": 200,
+      "stock": 199,
       "createdBy": 2,
       "participants": []
     },
@@ -136,7 +136,7 @@
       "description": "JPCC Worship adalah tim pujian penyembahan dari Jakarta Praise Community Church (JPCC) yang awalnya dikenal dengan True Worshippers. Lagu-lagu mereka sudah dinyanyikan di seluruh Indonesia bahkan di mancanegara. Beberapa album terakhir mereka diterjemahkan ke berbagai bahasa seperti Jepang, Thai, Mandarin dan lainnya.",
       "category": "Keagamaan",
       "price": 100000,
-      "stock": 248,
+      "stock": 250,
       "createdBy": 3,
       "participants": []
     },
@@ -425,20 +425,6 @@
       "price": 0
     },
     {
-      "id": 34,
-      "imageUrl": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230724092122.jpg",
-      "eventName": "qwer",
-      "date": "3 Des 2023",
-      "time": "08:00",
-      "location": "Batam",
-      "description": "",
-      "category": "Music",
-      "price": 0,
-      "stock": 100,
-      "createdBy": 1,
-      "participants": []
-    },
-    {
       "id": 35,
       "imageUrl": "https://images.unsplash.com/photo-1549451371-64aa98a6f660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
       "eventName": "asdfasf",
@@ -548,34 +534,6 @@
       "participants": []
     },
     {
-      "id": 43,
-      "imageUrl": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230724092122.jpg",
-      "eventName": "Bajafash",
-      "date": "20 Januari 2024",
-      "time": "08:00",
-      "location": "Batam",
-      "description": "",
-      "category": "Music",
-      "price": 0,
-      "stock": 100,
-      "createdBy": 3,
-      "participants": []
-    },
-    {
-      "id": 44,
-      "imageUrl": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230724092122.jpg",
-      "eventName": "Bajafash 222",
-      "date": "20 Januari 2024",
-      "time": "08:00",
-      "location": "Batam",
-      "description": "",
-      "category": "Music",
-      "price": 0,
-      "stock": 100,
-      "createdBy": 3,
-      "participants": []
-    },
-    {
       "id": 45,
       "imageUrl": "https://s3-ap-southeast-1.amazonaws.com/loket-production-sg/images/banner/20230724092122.jpg",
       "eventName": "Pestapora 2023111",
@@ -619,6 +577,20 @@
       "stock": 100,
       "createdBy": 3,
       "participants": []
+    },
+    {
+      "id": 48,
+      "imageUrl": "https://www.loket.com/web/assets/img/auth/icon-login.svg",
+      "eventName": "Pestapora 222",
+      "date": "5 Des 2023",
+      "time": "05:00",
+      "location": "Batam",
+      "description": "",
+      "category": "Belanja",
+      "price": "5000",
+      "stock": 100,
+      "createdBy": 6,
+      "participants": []
     }
   ],
   "carousel": [
@@ -661,64 +633,36 @@
       "referralCode": ""
     },
     {
-      "fullname": "test123",
+      "fullname": "arif123",
       "email": "123@123",
       "password": "123",
-      "referralCode": "LPL1RU",
-      "credit": "500000",
+      "refferalCode": "",
       "id": 4
     },
     {
-      "fullname": "tes123",
-      "email": "123@123",
+      "fullname": "arif",
+      "email": "arif@mail.com",
       "password": "123",
-      "referralCode": "RBRSXQ",
-      "credit": "500000",
+      "refferalCode": "",
       "id": 5
     },
     {
-      "fullname": "test123",
-      "email": "1234@123",
+      "fullname": "arman",
+      "email": "arman@mail.com",
       "password": "123",
-      "referralCode": "UF26P2",
+      "referralCode": "SVSK7J",
+      "referralCodeFromFriend": "",
       "credit": "500000",
       "id": 6
     },
     {
-      "fullname": "Test",
-      "email": "test@test.com",
-      "password": "123456",
-      "referralCode": "JF3EHB",
-      "referralCodeFromFriend": "",
+      "fullname": "man",
+      "email": "man@mail.com",
+      "password": "123",
+      "referralCode": "KK5UHU",
+      "referralCodeFromFriend": "SVSK7J",
       "credit": "500000",
       "id": 7
-    },
-    {
-      "fullname": "aaa",
-      "email": "aaa@xxx.com",
-      "password": "123",
-      "referralCode": "7M35AX",
-      "referralCodeFromFriend": "JF3EHB",
-      "credit": "500000",
-      "id": 8
-    },
-    {
-      "fullname": "asdfasdf",
-      "email": "asdfasdf@sss.com",
-      "password": "test",
-      "referralCode": "8ZR8MX",
-      "referralCodeFromFriend": "adfasdfasdfasdf",
-      "credit": "500000",
-      "id": 9
-    },
-    {
-      "fullname": "admin",
-      "email": "admin@mail.com",
-      "password": "arifarifah",
-      "referralCode": "5VVU4W",
-      "referralCodeFromFriend": "JF3EHB",
-      "credit": "500000",
-      "id": 10
     }
   ]
 }

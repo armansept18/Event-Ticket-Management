@@ -118,14 +118,14 @@ export const TransactionModal = ({
                 }`}
               >
                 <Text fontWeight="bold" display="inline">
-                  Presale:
+                  Price:
                 </Text>{" "}
                 Rp {eventDetails?.price.toLocaleString("id-ID")}
               </Box>
               {userDataFromLocalStorage?.referralCodeFromFriend && (
                 <Box>
                   <Text fontWeight="bold" display="inline">
-                    Presale:
+                    Price:
                   </Text>{" "}
                   Rp{" "}
                   {(

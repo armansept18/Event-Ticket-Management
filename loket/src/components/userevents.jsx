@@ -30,7 +30,7 @@ export const UserEvents = ({
         .filter((i) => i.createdBy === profileId)
         .map((event, index) => (
           <div key={event.id} className="py-2">
-            <div className="flex">
+            <div className="flex justify-between">
               <div>
                 <p>{event?.eventName}</p>
                 <p>{event?.date}</p>
@@ -38,6 +38,7 @@ export const UserEvents = ({
                 <p>{`Participant: ${event?.participants?.length}/${event?.stock}`}</p>
               </div>
               <div className="w-32">
+                <b className=" ml-6">Participant</b>
                 <Pie
                   data={{
                     datasets: [
