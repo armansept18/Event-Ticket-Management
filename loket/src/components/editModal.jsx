@@ -15,9 +15,12 @@ import { useSelector } from "react-redux";
 import defaultImage from "../assets/loket.png";
 import { api } from "../api/axios";
 
-export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
+import { useNavigate } from "react-router-dom";
+
+export const EditModal = ({ isOpen, onClose, fetchEvents, id, editData }) => {
   const userSelector = useSelector((state) => state.auth);
-  const [data, setData] = useState({
+
+  const initialData = {
     id: "",
     imageUrl: "",
     eventName: "",
@@ -30,7 +33,26 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
     stock: 100,
     createdBy: userSelector.id,
     participants: [],
-  });
+  };
+  const [data, setData] = useState(initialData);
+
+  useEffect(() => {
+    if (editData) {
+      setData({ ...editData });
+    }
+  }, [editData]);
+
+  const fetchEventById = async () => {
+    try {
+      const res = await api.get(`/events/${id}`);
+      setData({ ...res.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    if (id) fetchEventById();
+  }, [isOpen]);
 
   const inputHandler = (e) => {
     if (e.target.id == "price")
@@ -40,8 +62,6 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
       [e.target.id]: e.target.value,
     });
   };
-
-  console.log('userSelector.id :>> ', userSelector.id);
 
   const clear = () => {
     setData({
@@ -57,21 +77,18 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
     });
   };
 
-  useEffect(() => {
-    console.log('data.createdBy :>> ', data.createdBy);
-  }, [data.createdBy])
-
   const submit = async (e) => {
-    console.log('data submit :>> ', data);
+    console.log("id submit data :>> ", data.id);
     e.preventDefault();
     try {
-      if (userSelector.id) {
-        await api.post(`/events`, {...data, createdBy: userSelector?.id});
+      if (data.id) {
+        await api.patch(`/events/${data.id}`, data);
       } else {
-        await api.post("/events", { ...data, createdBy: userSelector?.id });
+        await api.post("/events", data);
         clear();
       }
       fetchEvents();
+      // navigate("/dashboard", { replace: true });
       onClose();
     } catch (err) {
       console.log(err);
@@ -80,7 +97,7 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
 
   const remove = async () => {
     try {
-      await api.delete(`/events/${data?.id}`);
+      await api.delete(`/events/${id}`);
       clear();
       fetchEvents();
       onClose();
@@ -97,7 +114,7 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create Event</ModalHeader>
+          <ModalHeader>Edit Event</ModalHeader>
           <ModalCloseButton />
           <form onSubmit={submit}>
             <ModalBody>
@@ -180,11 +197,11 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
 
             <ModalFooter>
               <Button colorScheme="blue" mr={3} onClick={submit} type="submit">
-                Submit
+                Update
               </Button>
               {Event ? (
-                <Button colorScheme="red" mr={3} onClick={remove}>
-                  Delete
+                <Button colorScheme="red" mr={3} onClick={onClose}>
+                  Cancel
                 </Button>
               ) : null}
             </ModalFooter>
