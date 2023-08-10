@@ -24,6 +24,7 @@ export const EventDetail = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -164,6 +165,9 @@ export const EventDetail = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         eventDetails={eventDetails}
+        userProfile={user}
+        updateUserProfile={setUser} 
+        handleOpenModal={handleOpenModal}
       />
     </Center>
   );

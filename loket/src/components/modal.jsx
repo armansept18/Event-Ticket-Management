@@ -13,30 +13,31 @@ import {
 import { useEffect, useState } from "react";
 import defaultImage from "../assets/loket.png";
 import { api } from "../api/axios";
-export const BasicModal = ({
-  isOpen,
-  onClose,
-  setProducts,
-  Product,
-  products = [],
-}) => {
-  const [data, setData] = useState(
-    Product
-      ? Product
-      : {
-          id: "",
-          imgUrl: "",
-          name: "",
-          date: "",
-          time: "",
-          location: "",
-          category: "",
-          price: 0,
-        }
-  );
+
+export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
+  const [data, setData] = useState({
+    id: "",
+    imageUrl: "",
+    eventName: "",
+    date: "",
+    time: "",
+    location: "",
+    description: "",
+    category: "",
+    price: 0,
+  });
+
+  const fetchEventById = async () => {
+    try {
+      const res = await api.get(`/events/${id}`);
+      setData({ ...res.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    setData(Product);
-  }, [Product]);
+    if (id) fetchEventById();
+  }, [isOpen]);
 
   const inputHandler = (e) => {
     if (e.target.id == "price")
@@ -50,55 +51,42 @@ export const BasicModal = ({
   const clear = () => {
     setData({
       id: "",
-      imgUrl: "",
-      name: "",
+      imageUrl: "",
+      eventName: "",
       date: "",
       time: "",
       location: "",
+      description: "",
       category: "",
       price: 0,
     });
   };
 
-  const submit = () => {
+  const submit = async (e) => {
+    e.preventDefault();
     try {
-      //add
-      if (!Product) {
-        if (
-          data.id &&
-          data.imgUrl &&
-          data.name &&
-          data.time &&
-          data.date &&
-          data.location &&
-          data.category &&
-          data.price
-        )
-          setProducts([
-            ...products,
-            { ...data, id: products[products.length - 1].id + 1 },
-          ]);
-        else alert("lengkapi input");
-        clear();
+      if (id) {
+        await api.patch(`/events/${id}`, data);
       } else {
-        const idx = products.findIndex((prod) => prod.id == Product.id); //0
-        const tmp = [...products];
-        tmp[idx] = data;
-        setProducts(tmp);
+        await api.post("/events", data);
+        clear();
       }
+      fetchEvents();
       onClose();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const remove = () => {
-    const idx = products.findIndex((prod) => prod.id == Product.id);
-    const tmp = [...products];
-    tmp.splice(idx, 1);
-    setProducts(tmp);
-    clear();
-    onClose();
+  const remove = async () => {
+    try {
+      await api.delete(`/events/${id}`);
+      clear();
+      fetchEvents();
+      onClose();
+    } catch (err) {
+      console.log(err);
+    }
   };
   const addProducts = async () => {
     await api.get("/events");
@@ -109,74 +97,98 @@ export const BasicModal = ({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add/Edit Events</ModalHeader>
+          <ModalHeader>Create Event</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <Center flexDir="column" gap={"15px"}>
-              <img
-                src={data?.ImageUrl ? data?.ImageUrl : defaultImage}
-                width={"201px"}
-                height={"143px"}
-                alt="isi dengan gambar"
-              ></img>
-              <Input
-                id="ImageUrl"
-                placeholder="Image URL"
-                maxW="300px"
-                defaultValue={data?.ImageUrl}
-                onChange={inputHandler}
-              ></Input>
-              <Input
-                id="name"
-                placeholder="Product Name"
-                maxW="300px"
-                defaultValue={data?.name}
-                onChange={inputHandler}
-              ></Input>
+          <form onSubmit={submit}>
+            <ModalBody>
+              <Center flexDir="column" gap={"15px"}>
+                <img
+                  src={data?.imageUrl ? data?.imageUrl : defaultImage}
+                  width={"201px"}
+                  height={"143px"}
+                  alt="isi dengan gambar"
+                ></img>
+                <Input
+                  id="imageUrl"
+                  placeholder="Image URL"
+                  maxW="300px"
+                  defaultValue={data?.imageUrl}
+                  onChange={inputHandler}
+                  required
+                  type="url"
+                ></Input>
+                <Input
+                  id="eventName"
+                  placeholder="Event Name"
+                  maxW="300px"
+                  defaultValue={data?.eventName}
+                  onChange={inputHandler}
+                  required
+                ></Input>
+                <Input
+                id="date"
+                  placeholder="Date"
+                  size="md"
+                  maxW="300px"
+                  defaultValue={data?.date}
+                  onChange={inputHandler}
+                  required
+                />
+                <Input
+                  id="time"
+                  placeholder="Time"
+                  size="md"
+                  maxW="300px"
+                  defaultValue={data?.time}
+                  onChange={inputHandler}
+                  required
+                />
+                <Input
+                  id="location"
+                  placeholder="location"
+                  maxW="300px"
+                  defaultValue={data?.location}
+                  onChange={inputHandler}
+                  required
+                ></Input>
+                <Input
+                  id="description"
+                  placeholder="Event Description"
+                  maxW="300px"
+                  defaultValue={data?.description}
+                  onChange={inputHandler}
+                ></Input>
+                <Input
+                  id="category"
+                  placeholder="Event Category"
+                  maxW="300px"
+                  defaultValue={data?.category}
+                  onChange={inputHandler}
+                  required
+                ></Input>
+                <Input
+                  id="price"
+                  placeholder="Event Price"
+                  maxW="300px"
+                  defaultValue={data?.price}
+                  value={data?.price}
+                  onChange={inputHandler}
+                  required
+                ></Input>
+              </Center>
+            </ModalBody>
 
-              <Input
-                placeholder="Select Date and Time"
-                size="md"
-                type="datetime-local"
-                maxW="300px"
-                defaultValue={data?.time && data?.da}
-                onChange={inputHandler}
-              />
-              <Input
-                id="location"
-                placeholder="location"
-                maxW="300px"
-                defaultValue={data?.location}
-                onChange={inputHandler}
-              ></Input>
-              <Input
-                id="category"
-                placeholder="category"
-                maxW="300px"
-                defaultValue={data?.category}
-                onChange={inputHandler}
-              ></Input>
-              <Input
-                id="price"
-                placeholder="Product Price"
-                maxW="300px"
-                defaultValue={data?.price}
-                value={data?.price}
-                onChange={inputHandler}
-              ></Input>
-            </Center>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={submit}>
-              Submit
-            </Button>
-            {Product ? (
-              <Button colorScheme="red" mr={3} onClick={remove}>
-                Delete
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={submit}>
+                Submit
               </Button>
-            ) : null}
-          </ModalFooter>
+              {Event ? (
+                <Button colorScheme="red" mr={3} onClick={remove}>
+                  Delete
+                </Button>
+              ) : null}
+            </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
     </>
