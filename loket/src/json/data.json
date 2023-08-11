@@ -52,7 +52,7 @@
       "description": "PROJEK-D merupakan sebutan singkat dari Projek Dynamic (Dyandra Music & Collaborations), melalui Projek-D, Dyandra Promosindo ingin mempersembahkan festival musik yang dapat dinikmati oleh seluruh kalangan. Sejalan dengan gairah tersebut demi menciptakan ekosistem dan pengalaman baru bagi para pegiat hingga penikmat musik, khususnya yang berada di luar Kota Jakarta. Solo yang dijuluki sebagai kota penuh nuansa sejarah dan kental dengan warisan budaya, dipilih karena memiliki berbagai macam kesenian bertaraf nasional dan internasional.",
       "category": "Musik",
       "price": 100000,
-      "stock": 498,
+      "stock": 497,
       "createdBy": 1,
       "participants": []
     },
@@ -94,7 +94,7 @@
       "description": "Playlist Live Festival 2023",
       "category": "Musik",
       "price": 150000,
-      "stock": 750,
+      "stock": 749,
       "createdBy": 2,
       "participants": []
     },
@@ -663,6 +663,15 @@
       "referralCodeFromFriend": "SVSK7J",
       "credit": "500000",
       "id": 7
+    },
+    {
+      "fullname": "tama",
+      "email": "tama@mail.com",
+      "password": "123",
+      "referralCode": "DJHNZY",
+      "referralCodeFromFriend": "",
+      "credit": "500000",
+      "id": 8
     }
   ]
 }

@@ -6,6 +6,7 @@ const init_state = {
   email: "",
   password: "",
   referralCode: "",
+  credit: "",
 };
 
 export const userReducer = (state = init_state, action) => {
@@ -15,6 +16,8 @@ export const userReducer = (state = init_state, action) => {
       id: action.payload.id,
       fullname: action.payload.fullname,
       email: action.payload.email,
+      credit: action.payload.credit,
+      referralCode: action.payload.referralCode,
     };
   } else if (action.type === types.logout) return init_state;
   return state;

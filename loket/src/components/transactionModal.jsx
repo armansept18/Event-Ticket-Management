@@ -83,6 +83,7 @@ export const TransactionModal = ({
         await api.put(`/events/${eventDetails.id}`, updatedEventDetails);
         handleOpenModal();
         onClose();
+        alert("Sukses Membeli Tiket");
       } catch (error) {
         alert("Error purchasing tickets:", error);
       }
