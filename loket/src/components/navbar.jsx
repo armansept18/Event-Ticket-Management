@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import {
   Box,
   Flex,
@@ -10,8 +10,23 @@ import {
   useDisclosure,
   InputGroup,
   InputLeftElement,
+  chakra,
+  VisuallyHidden,
+  HStack,
+  VStack,
+  IconButton,
+  CloseButton,
+  Avatar,
 } from "@chakra-ui/react";
 
+import {
+  AiOutlineMenu,
+  AiFillHome,
+  AiOutlineInbox,
+  AiOutlineSearch,
+  AiFillBell,
+} from "react-icons/ai";
+import { BsFillCameraVideoFill } from "react-icons/bs";
 import { Input } from "@chakra-ui/react";
 import Loket from "../assets/loket.png";
 import { Search2Icon } from "@chakra-ui/icons";
@@ -38,7 +53,6 @@ export default function Navbar(props) {
       >
         <a
           href="/home"
-        
           style={{
             width: "50px",
             height: "50px",
@@ -115,8 +129,8 @@ export default function Navbar(props) {
                   style={{
                     width: "40px",
                     height: "40px",
-                    backgroundColor:"#e5e5e5",
-                    borderRadius: "50%"
+                    backgroundColor: "#e5e5e5",
+                    borderRadius: "50%",
                   }}
                 />
               </a>

@@ -3,6 +3,7 @@ import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
 import { api } from "../api/axios";
+import gambar1 from "../assets/carousel1.jpg";
 
 const settings = {
   dots: true,
@@ -42,11 +43,14 @@ const Carousel = () => {
 
   return (
     <Box
+      // objectFit={"contain"}
       position={"relative"}
-      height={"550px"}
-      width={"60%"}
-      overflow={"hidden"}
+      height={"280px"}
+      width={"1280px"}
+      objectFit={"contain"}
+      // overflow={"hidden"}
       margin={"20px auto"}
+      // padding={"20px"}
     >
       <link
         rel="stylesheet"
@@ -91,14 +95,15 @@ const Carousel = () => {
         {cards.map((card, index) => (
           <Box
             key={index}
-            height={"500px"}
+            height={"280px"}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
-            backgroundSize="full"
-            // objectFit={"full"}
+            objectFit={"contain"}
             borderRadius={"20px"}
+            padding={"20px"}
             backgroundImage={`url(${card.imageCarousel})`}
+            // backgroundImage={gambar1}
           ></Box>
         ))}
       </Slider>

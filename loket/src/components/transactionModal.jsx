@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Modal,
   ModalOverlay,
@@ -20,11 +21,21 @@ export const TransactionModal = ({
   isOpen,
   onClose,
   eventDetails,
-  userProfile,
+
   updateUserProfile,
   handleOpenModal,
 }) => {
+  const userSelector = useSelector((state) => state.auth);
+
   const userDataFromLocalStorage = JSON.parse(localStorage.getItem("auth"));
+
+  const referralCodeUsage = userDataFromLocalStorage?.referralCodeUsage || 0;
+
+  const [updatedEventDetails, setUpdateEventDetails] = useState(eventDetails);
+
+  const [userCredit, setUserCredit] = useState(
+    userDataFromLocalStorage?.credit
+  );
   const [ticketQuantity, setTicketQuantity] = useState(1);
 
   const handleIncreaseTicket = () => {
@@ -37,50 +48,47 @@ export const TransactionModal = ({
     }
   };
 
-  const selectedTicketCategory =
-    eventDetails &&
-    eventDetails["ticket-category"] &&
-    eventDetails["ticket-category"].length > 0
-      ? eventDetails["ticket-category"][0]
-      : null;
-
   const handleBuyTickets = async () => {
-    const price = userDataFromLocalStorage?.referralCodeFromFriend
-      ? eventDetails?.price - (10 / 100) * eventDetails?.price
-      : eventDetails?.price;
-    console.log("price", price);
+    const isReferralCodeValid =
+      userDataFromLocalStorage.referralCodeFromFriend && referralCodeUsage < 1;
+    const price = userDataFromLocalStorage?.referralCodeFromFriend;
+    if (isReferralCodeValid) {
+      // Apply the discount
+      price = (90 / 100) * eventDetails.price; // Apply a 10% discount
+    }
+
     const totalPrice = price * ticketQuantity;
-    console.log("userDataFromLocalStorage", userDataFromLocalStorage);
-    console.log("totalPrice", totalPrice);
-    console.log("eventDetails", eventDetails);
-    console.log(
-      "userDataFromLocalStorage.credit >= totalPrice",
-      Number(userDataFromLocalStorage.credit) >= totalPrice
-    );
-    console.log(
-      "eventDetails.stock >= ticketQuantity",
-      eventDetails.stock >= ticketQuantity
-    );
 
     if (
-      Number(userDataFromLocalStorage.credit) >= totalPrice &&
+      userDataFromLocalStorage.credit >= totalPrice &&
       eventDetails.stock >= ticketQuantity
     ) {
       try {
         const updatedUserProfile = {
           ...userDataFromLocalStorage,
-          credit: Number(userDataFromLocalStorage.credit) - totalPrice,
+          credit: userDataFromLocalStorage.credit - totalPrice,
         };
 
         const updatedEventDetails = {
           ...eventDetails,
           stock: eventDetails.stock - ticketQuantity,
         };
+        const newParticipant = {
+          id: userSelector.id,
+          name: userSelector.name,
+        };
+
+        updatedEventDetails.participants.push(newParticipant);
 
         updateUserProfile(updatedUserProfile);
         console.log("updatedEventDetails", updatedEventDetails);
-
+        await api.patch(`/users/${updatedUserProfile.id}`, {
+          credit: updatedUserProfile.credit,
+        });
         await api.put(`/events/${eventDetails.id}`, updatedEventDetails);
+        localStorage.setItem("auth", JSON.stringify(updatedUserProfile));
+        setUpdateEventDetails(updatedEventDetails);
+        setUserCredit(updatedUserProfile.credit);
         handleOpenModal();
         onClose();
         alert("Sukses Membeli Tiket");
@@ -88,9 +96,10 @@ export const TransactionModal = ({
         alert("Error purchasing tickets:", error);
       }
     } else {
-      alert("Insufficient credit or stock");
+      alert("credit anda tidak cukup top up dlu boss");
     }
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
@@ -149,7 +158,6 @@ export const TransactionModal = ({
             </Flex>
           </Flex>
         </ModalBody>
-
         <ModalFooter>
           <Button variant="ghost" mr={3} onClick={onClose}>
             Tutup

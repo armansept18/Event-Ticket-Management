@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@chakra-ui/react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import { useSelector } from "react-redux";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -12,6 +13,7 @@ export const UserEvents = ({
   onEdit,
   profileId,
 }) => {
+  const userSelector = useSelector((state) => state.auth);
   const handleDelete = async (id) => {
     await onDelete(id);
     fetchEvents();
@@ -21,6 +23,11 @@ export const UserEvents = ({
     await onEdit(id);
     fetchEvents();
   };
+
+  // Fetch events and participants whenever events change
+  React.useEffect(() => {
+    fetchEvents();
+  }, []);
 
   return (
     <div>

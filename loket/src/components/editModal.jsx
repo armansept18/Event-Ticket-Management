@@ -30,7 +30,7 @@ export const EditModal = ({ isOpen, onClose, fetchEvents, id, editData }) => {
     description: "",
     category: "",
     price: 0,
-    stock: 100,
+    stock: 0,
     createdBy: userSelector.id,
     participants: [],
   };
@@ -74,6 +74,7 @@ export const EditModal = ({ isOpen, onClose, fetchEvents, id, editData }) => {
       description: "",
       category: "",
       price: 0,
+      stock: "",
     });
   };
 
@@ -180,6 +181,15 @@ export const EditModal = ({ isOpen, onClose, fetchEvents, id, editData }) => {
                   placeholder="Event Category"
                   maxW="300px"
                   defaultValue={data?.category}
+                  onChange={inputHandler}
+                  required
+                ></Input>
+                <Input
+                  id="stock"
+                  placeholder="stock"
+                  maxW="300px"
+                  defaultValue={data?.stock}
+                  value={data?.stock}
                   onChange={inputHandler}
                   required
                 ></Input>

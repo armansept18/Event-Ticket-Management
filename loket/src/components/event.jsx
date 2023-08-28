@@ -58,7 +58,7 @@ export const EventCard = ({ event }) => {
 
 export const EventList = ({ events = [], fetchEvents }) => {
   return (
-    <Grid className="sm:grid-cols-3 gap-6">
+    <Grid className="sm:grid-cols-4 gap-6">
       {events?.map((event, idx) => (
         <GridItem key={idx}>
           <a style={{ cursor: "pointer" }}>

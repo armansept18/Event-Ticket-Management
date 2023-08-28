@@ -14,16 +14,17 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
+
 import { useSelector } from "react-redux";
 import { TransactionModal } from "../components/transactionModal";
 
 export const EventDetail = () => {
+  const userSelector = useSelector((state) => state.auth);
   const userDataFromLocalStorage = JSON.parse(localStorage.getItem("auth"));
   const { eventId } = useParams();
   const [eventDetails, setEventDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState({});
   console.log("user profile", user);
@@ -58,136 +59,138 @@ export const EventDetail = () => {
   };
 
   return (
-    <Center py={6}>
-      <Stack
-        borderWidth="1px"
-        borderRadius="lg"
-        w={{ sm: "100%", md: "1440px" }}
-        height={{ sm: "476px", md: "45rem" }}
-        direction={{ base: "column", md: "row" }}
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        bg={useColorModeValue("white", "gray.900")}
-        boxShadow={"2xl"}
-        padding={4}
-      >
-        <Flex flex={1} bg="gray.200">
-          <Image
-            objectFit="contain"
-            boxSize="100%"
-            src={eventDetails.imageUrl}
-            alt={eventDetails.eventName}
-          />
-        </Flex>
+    <>
+      <Center py={6}>
         <Stack
-          flex={1}
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          p={1}
-          pt={2}
+          borderWidth="1px"
+          borderRadius="lg"
+          w={{ sm: "100%", md: "1440px" }}
+          height={{ sm: "476px", md: "45rem" }}
+          direction={{ base: "column", md: "row" }}
+          // eslint-disable-next-line react-hooks/rules-of-hooks
+          bg={useColorModeValue("white", "gray.900")}
+          boxShadow={"2xl"}
+          padding={4}
         >
-          <Heading fontSize={"2xl"} fontFamily={"BasierCircle"}>
-            {eventDetails.eventName}
-          </Heading>
-          <Text fontWeight={600} color={"gray.500"} size="sm" mb={4}>
-            {eventDetails.category}
-          </Text>
-          <Text textAlign={"justify"} color={("gray.700", "gray.400")} px={3}>
-            {eventDetails.description}
-          </Text>
-          (
-          <>
-            <Text
-              className={`font-medium ${
-                userDataFromLocalStorage?.referralCodeFromFriend
-                  ? "line-through"
-                  : ""
-              }`}
-            >
-              Price: Rp {Number(eventDetails.price).toLocaleString("id-ID")}
+          <Flex flex={1} bg="gray.200">
+            <Image
+              objectFit="contain"
+              boxSize="100%"
+              src={eventDetails.imageUrl}
+              alt={eventDetails.eventName}
+            />
+          </Flex>
+          <Stack
+            flex={1}
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            p={1}
+            pt={2}
+          >
+            <Heading fontSize={"2xl"} fontFamily={"BasierCircle"}>
+              {eventDetails.eventName}
+            </Heading>
+            <Text fontWeight={600} color={"gray.500"} size="sm" mb={4}>
+              {eventDetails.category}
             </Text>
-            {userDataFromLocalStorage?.referralCodeFromFriend && (
-              <Text className={`font-medium`}>
-                Price: Rp{" "}
-                {Number(
-                  eventDetails.price - (10 / 100) * eventDetails.price
-                ).toLocaleString("id-ID")}
+            <Text textAlign={"justify"} color={("gray.700", "gray.400")} px={3}>
+              {eventDetails.description}
+            </Text>
+            (
+            <>
+              <Text
+                className={`font-medium ${
+                  userDataFromLocalStorage?.referralCodeFromFriend
+                    ? "line-through"
+                    : ""
+                }`}
+              >
+                Price: Rp {Number(eventDetails.price).toLocaleString("id-ID")}
               </Text>
-            )}
-          </>
-          )
-          <Stack
-            align={"center"}
-            justify={"center"}
-            direction={"column"}
-            mt={6}
-          >
-            <Badge
-              px={2}
-              py={1}
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              bg={useColorModeValue("gray.50", "gray.800")}
-              fontWeight={"400"}
+              {userDataFromLocalStorage?.referralCodeFromFriend && (
+                <Text className={`font-medium`}>
+                  Price: Rp{" "}
+                  {Number(
+                    eventDetails.price - (10 / 100) * eventDetails.price
+                  ).toLocaleString("id-ID")}
+                </Text>
+              )}
+            </>
+            )
+            <Stack
+              align={"center"}
+              justify={"center"}
+              direction={"column"}
+              mt={6}
             >
-              {eventDetails.date}
-            </Badge>
-            <Badge
-              px={2}
-              py={1}
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              bg={useColorModeValue("gray.50", "gray.800")}
-              fontWeight={"400"}
+              <Badge
+                px={2}
+                py={1}
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                bg={useColorModeValue("gray.50", "gray.800")}
+                fontWeight={"400"}
+              >
+                {eventDetails.date}
+              </Badge>
+              <Badge
+                px={2}
+                py={1}
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                bg={useColorModeValue("gray.50", "gray.800")}
+                fontWeight={"400"}
+              >
+                {eventDetails.time}
+              </Badge>
+              <Badge
+                px={2}
+                py={1}
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                bg={useColorModeValue("gray.50", "gray.800")}
+                fontWeight={"400"}
+              >
+                {eventDetails.location}
+              </Badge>
+            </Stack>
+            <Stack
+              width={"50%"}
+              mt={"2rem"}
+              direction={"row"}
+              padding={2}
+              justifyContent={"space-between"}
+              alignItems={"center"}
             >
-              {eventDetails.time}
-            </Badge>
-            <Badge
-              px={2}
-              py={1}
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              bg={useColorModeValue("gray.50", "gray.800")}
-              fontWeight={"400"}
-            >
-              {eventDetails.location}
-            </Badge>
-          </Stack>
-          <Stack
-            width={"50%"}
-            mt={"2rem"}
-            direction={"row"}
-            padding={2}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
-            <Button
-              flex={1}
-              fontSize={"sm"}
-              rounded={"full"}
-              bg={"blue.400"}
-              color={"white"}
-              boxShadow={
-                "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-              }
-              _hover={{
-                bg: "blue.500",
-              }}
-              _focus={{
-                bg: "#0049CC",
-              }}
-              onClick={handleOpenModal}
-            >
-              Beli Tiket
-            </Button>
+              <Button
+                flex={1}
+                fontSize={"sm"}
+                rounded={"full"}
+                bg={"blue.400"}
+                color={"white"}
+                boxShadow={
+                  "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
+                }
+                _hover={{
+                  bg: "blue.500",
+                }}
+                _focus={{
+                  bg: "#0049CC",
+                }}
+                onClick={handleOpenModal}
+              >
+                Beli Tiket
+              </Button>
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
-      <TransactionModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        eventDetails={eventDetails}
-        userProfile={userDataFromLocalStorage}
-        updateUserProfile={setUser}
-        handleOpenModal={handleOpenModal}
-      />
-    </Center>
+        <TransactionModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          eventDetails={eventDetails}
+          userProfile={userDataFromLocalStorage}
+          updateUserProfile={setUser}
+          handleOpenModal={handleOpenModal}
+        />
+      </Center>
+    </>
   );
 };

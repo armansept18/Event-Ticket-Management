@@ -25,7 +25,7 @@ const Register = ({ users = [], setUsers }) => {
     password: "",
     referralCode: "",
     referralCodeFromFriend: "",
-    credit: "500000",
+    credit: 0,
   });
 
   const InputHandler = (key, value) => {
@@ -61,7 +61,7 @@ const Register = ({ users = [], setUsers }) => {
         email: "",
         password: "",
         referralCode: "",
-        credit: "500000",
+        credit: 0,
       },
     });
 
@@ -77,7 +77,6 @@ const Register = ({ users = [], setUsers }) => {
     const checkReferralCode = await api.get(
       `/users?q=${user.referralCodeFromFriend}`
     );
-    console.log("checkReferralCode", checkReferralCode);
 
     if (check.data.length) return alert("email sudah terdaftar");
     if (checkReferralCode.data.length === 0)
@@ -86,13 +85,12 @@ const Register = ({ users = [], setUsers }) => {
     if (user.password) {
       const tmp = { ...user };
       delete tmp.confirmPassword;
-      await api.post("/users", tmp);
 
+      await api.post("/users", tmp);
       nav("/login");
     } else {
       alert("password dan confirm password tidak sesuai");
     }
-
     dispatch({
       type: types.logout,
       payload: { ...auth.data },

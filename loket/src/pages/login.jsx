@@ -12,10 +12,6 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -34,6 +30,7 @@ export const SimpleCard = ({ users = [] }) => {
   };
 
   const dispatch = useDispatch();
+
   const userSelector = useSelector((state) => state.auth);
   useEffect(() => {
     if (userSelector.id) nav("/home");
@@ -63,6 +60,7 @@ export const SimpleCard = ({ users = [] }) => {
     alert(`Hello`);
     nav("/home");
   };
+  useEffect(() => {}, [userSelector]);
 
   return (
     <Flex

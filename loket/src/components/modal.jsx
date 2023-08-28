@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import defaultImage from "../assets/loket.png";
 import { api } from "../api/axios";
-
+import { UserEvents } from "./userevents";
 export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
   const userSelector = useSelector((state) => state.auth);
   const [data, setData] = useState({
@@ -27,7 +27,7 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
     description: "",
     category: "",
     price: 0,
-    stock: 100,
+    stock: 0,
     createdBy: userSelector.id,
     participants: [],
   });
@@ -41,7 +41,7 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
     });
   };
 
-  console.log('userSelector.id :>> ', userSelector.id);
+  console.log("userSelector.id :>> ", userSelector.id);
 
   const clear = () => {
     setData({
@@ -53,20 +53,21 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
       location: "",
       description: "",
       category: "",
+      stock: 0,
       price: 0,
     });
   };
 
   useEffect(() => {
-    console.log('data.createdBy :>> ', data.createdBy);
-  }, [data.createdBy])
+    console.log("data.createdBy :>> ", data.createdBy);
+  }, [data.createdBy]);
 
   const submit = async (e) => {
-    console.log('data submit :>> ', data);
+    console.log("data submit :>> ", data);
     e.preventDefault();
     try {
       if (userSelector.id) {
-        await api.post(`/events`, {...data, createdBy: userSelector?.id});
+        await api.post(`/events`, { ...data, createdBy: userSelector?.id });
       } else {
         await api.post("/events", { ...data, createdBy: userSelector?.id });
         clear();
@@ -163,6 +164,15 @@ export const BasicModal = ({ isOpen, onClose, fetchEvents, id }) => {
                   placeholder="Event Category"
                   maxW="300px"
                   defaultValue={data?.category}
+                  onChange={inputHandler}
+                  required
+                ></Input>
+                <Input
+                  id="stock"
+                  placeholder="stock"
+                  maxW="300px"
+                  defaultValue={data?.stock}
+                  value={data?.stock}
                   onChange={inputHandler}
                   required
                 ></Input>

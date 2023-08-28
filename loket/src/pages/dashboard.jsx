@@ -49,7 +49,7 @@ export const Dashboard = () => {
     }
   }, [userSelector]);
 
-console.log("userSelector.id :>> ", userSelector.id);
+  console.log("userSelector.id :>> ", userSelector.id);
 
   useEffect(() => {
     fetchEvents();
