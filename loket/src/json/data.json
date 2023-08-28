@@ -10,11 +10,8 @@
       "description": "SATURDAY NIGHT FOR JYP NIGHT! LET’S GO CRAZY CHINGU~",
       "category": "Musik",
       "price": 100000,
-<<<<<<< Updated upstream
-      "stock": 1498,
-=======
+
       "stock": 1497,
->>>>>>> Stashed changes
       "createdBy": 1,
       "participants": []
     },
@@ -56,11 +53,8 @@
       "description": "PROJEK-D merupakan sebutan singkat dari Projek Dynamic (Dyandra Music & Collaborations), melalui Projek-D, Dyandra Promosindo ingin mempersembahkan festival musik yang dapat dinikmati oleh seluruh kalangan. Sejalan dengan gairah tersebut demi menciptakan ekosistem dan pengalaman baru bagi para pegiat hingga penikmat musik, khususnya yang berada di luar Kota Jakarta. Solo yang dijuluki sebagai kota penuh nuansa sejarah dan kental dengan warisan budaya, dipilih karena memiliki berbagai macam kesenian bertaraf nasional dan internasional.",
       "category": "Musik",
       "price": 100000,
-<<<<<<< Updated upstream
-      "stock": 497,
-=======
+
       "stock": 496,
->>>>>>> Stashed changes
       "createdBy": 1,
       "participants": []
     },
@@ -130,11 +124,8 @@
       "description": "Untuk Anda yang ingin meningkatkan kemampuan di bidang Manajerial Sekolah. Mengulas 7 Modul Manajemen Sekolah secara aplikatif, inspiratif, dan komprehensif.",
       "category": "Bisnis",
       "price": 100000,
-<<<<<<< Updated upstream
-      "stock": 199,
-=======
+
       "stock": 168,
->>>>>>> Stashed changes
       "createdBy": 2,
       "participants": []
     },
@@ -148,11 +139,8 @@
       "description": "JPCC Worship adalah tim pujian penyembahan dari Jakarta Praise Community Church (JPCC) yang awalnya dikenal dengan True Worshippers. Lagu-lagu mereka sudah dinyanyikan di seluruh Indonesia bahkan di mancanegara. Beberapa album terakhir mereka diterjemahkan ke berbagai bahasa seperti Jepang, Thai, Mandarin dan lainnya.",
       "category": "Keagamaan",
       "price": 100000,
-<<<<<<< Updated upstream
-      "stock": 250,
-=======
+
       "stock": 247,
->>>>>>> Stashed changes
       "createdBy": 3,
       "participants": [
         {
@@ -299,8 +287,6 @@
       "stock": 499,
       "createdBy": 5,
       "participants": []
-<<<<<<< Updated upstream
-=======
     },
     {
       "id": 21,
@@ -391,7 +377,6 @@
       ],
       "createdBy": 12,
       "id": 30
->>>>>>> Stashed changes
     }
   ],
   "carousel": [
@@ -436,35 +421,26 @@
     {
       "fullname": "arif123",
       "email": "123@123",
-<<<<<<< Updated upstream
       "password": "123",
-      "refferalCode": "",
-      "id": 4
-=======
-      "password": "",
-      "referralCode": "LPL1RU",
-      "credit": 100000,
+
       "id": 4,
-      "name": ""
->>>>>>> Stashed changes
+
+      "referralCode": "LPL1RU",
+      "credit": 100000
     },
     {
       "fullname": "arif",
       "email": "arif@mail.com",
       "password": "123",
-<<<<<<< Updated upstream
       "refferalCode": "",
-=======
       "referralCode": "RBRSXQ",
       "credit": 399000,
->>>>>>> Stashed changes
       "id": 5
     },
     {
       "fullname": "arman",
       "email": "arman@mail.com",
       "password": "123",
-<<<<<<< Updated upstream
       "referralCode": "SVSK7J",
       "referralCodeFromFriend": "",
       "credit": "500000",
@@ -477,9 +453,7 @@
       "referralCode": "KK5UHU",
       "referralCodeFromFriend": "SVSK7J",
       "credit": "500000",
-=======
-      "referralCode": "UF26P2",
-      "credit": 500000,
+
       "id": 6
     },
     {
@@ -489,22 +463,15 @@
       "referralCode": "JF3EHB",
       "referralCodeFromFriend": "",
       "credit": 500000,
->>>>>>> Stashed changes
       "id": 7
     },
     {
       "fullname": "tama",
       "email": "tama@mail.com",
       "password": "123",
-<<<<<<< Updated upstream
       "referralCode": "DJHNZY",
       "referralCodeFromFriend": "",
       "credit": "500000",
-      "id": 8
-=======
-      "referralCode": "7M35AX",
-      "referralCodeFromFriend": "JF3EHB",
-      "credit": 500000,
       "id": 8
     },
     {
@@ -577,7 +544,6 @@
       "referralCodeFromFriend": "S3JWUP",
       "credit": 0,
       "id": 17
->>>>>>> Stashed changes
     }
   ]
 }
