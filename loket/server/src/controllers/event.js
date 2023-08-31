@@ -38,6 +38,13 @@ const eventControllers = {
       .then((result) => res.send({ message: `EVENT ID ${id} DELETED!` }))
       .catch((err) => res.status(500).send({ message: err?.message }));
   },
+  getAllEventWithUser(req,res) {
+    db.Event.findAll({
+      include: {model: db.User, as: user},
+    })
+      .then((result) => res.send(result))
+      .catch((err) => res.status(500).send(err?.message))
+  },
 };
 
 module.exports = eventControllers;

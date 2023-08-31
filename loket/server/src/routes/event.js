@@ -4,6 +4,7 @@ const route = express.Router();
 
 route.get("/", eventControllers.getAll);
 route.get("/name", eventControllers.getByEventName);
+route.get("/users", eventControllers.getAllEventWithUser);
 route.get("/:id", eventControllers.getById);
 
 route.post("/", eventControllers.createEvent);

@@ -49,5 +49,6 @@ db.Sequelize = Sequelize;
 
 db.Event = require("./event")(sequelize, Sequelize);
 db.Carousel = require("./carousel")(sequelize, Sequelize);
+db.User = require("./user")(sequelize, Sequelize);
 
 module.exports = db;
