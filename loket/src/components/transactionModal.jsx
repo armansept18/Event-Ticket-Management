@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Modal,
   ModalOverlay,
@@ -14,8 +14,12 @@ import {
   Text,
   Stack,
   Box,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
 import { api } from "../api/axios";
+import { addPurchasedTicket } from "../redux/reducers";
 
 export const TransactionModal = ({
   isOpen,
@@ -26,13 +30,8 @@ export const TransactionModal = ({
   handleOpenModal,
 }) => {
   const userSelector = useSelector((state) => state.auth);
-
   const userDataFromLocalStorage = JSON.parse(localStorage.getItem("auth"));
-
-  const referralCodeUsage = userDataFromLocalStorage?.referralCodeUsage || 0;
-
-  const [updatedEventDetails, setUpdateEventDetails] = useState(eventDetails);
-
+  const dispatch = useDispatch();
   const [userCredit, setUserCredit] = useState(
     userDataFromLocalStorage?.credit
   );
@@ -49,14 +48,10 @@ export const TransactionModal = ({
   };
 
   const handleBuyTickets = async () => {
-    const isReferralCodeValid =
-      userDataFromLocalStorage.referralCodeFromFriend && referralCodeUsage < 1;
-    const price = userDataFromLocalStorage?.referralCodeFromFriend;
-    if (isReferralCodeValid) {
-      // Apply the discount
-      price = (90 / 100) * eventDetails.price; // Apply a 10% discount
-    }
-
+    const price = userDataFromLocalStorage?.referralCodeFromFriend
+      ? eventDetails?.price - (10 / 100) * eventDetails?.price
+      : eventDetails?.price;
+    console.log("price", price);
     const totalPrice = price * ticketQuantity;
 
     if (
@@ -75,7 +70,7 @@ export const TransactionModal = ({
         };
         const newParticipant = {
           id: userSelector.id,
-          name: userSelector.name,
+          name: userSelector.fullname,
         };
 
         updatedEventDetails.participants.push(newParticipant);
@@ -87,11 +82,12 @@ export const TransactionModal = ({
         });
         await api.put(`/events/${eventDetails.id}`, updatedEventDetails);
         localStorage.setItem("auth", JSON.stringify(updatedUserProfile));
-        setUpdateEventDetails(updatedEventDetails);
+
+        dispatch(addPurchasedTicket(updatedEventDetails));
+
         setUserCredit(updatedUserProfile.credit);
         handleOpenModal();
         onClose();
-        alert("Sukses Membeli Tiket");
       } catch (error) {
         alert("Error purchasing tickets:", error);
       }
@@ -128,14 +124,14 @@ export const TransactionModal = ({
                 }`}
               >
                 <Text fontWeight="bold" display="inline">
-                  Price:
+                  Presale:
                 </Text>{" "}
                 Rp {eventDetails?.price.toLocaleString("id-ID")}
               </Box>
               {userDataFromLocalStorage?.referralCodeFromFriend && (
                 <Box>
                   <Text fontWeight="bold" display="inline">
-                    Price:
+                    Presale:
                   </Text>{" "}
                   Rp{" "}
                   {(
@@ -158,6 +154,7 @@ export const TransactionModal = ({
             </Flex>
           </Flex>
         </ModalBody>
+
         <ModalFooter>
           <Button variant="ghost" mr={3} onClick={onClose}>
             Tutup

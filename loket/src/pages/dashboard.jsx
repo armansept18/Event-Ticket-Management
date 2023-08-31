@@ -18,24 +18,27 @@ import { UserEvents } from "../components/userevents";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { api } from "../api/axios";
-import defaultImage from "../assets/loket.png";
+
 import { BasicModal } from "../components/modal";
 import { EditModal } from "../components/editModal";
 import { UserProfile } from "../components/user-profile";
+import { YourTickets } from "../components/yourTicket";
 
 export const Dashboard = () => {
-  const [user, setUser] = useState({});
   const { onOpen, onClose, isOpen } = useDisclosure();
   const {
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
     isOpen: isOpenEdit,
   } = useDisclosure();
-  const [isLoading, setIsLoading] = useState(true);
+
   const userSelector = useSelector((state) => state.auth);
   const [events, setEvents] = useState([]);
+  const [tickets, setTikets] = useState([]);
   const [data, setData] = useState({});
   const nav = useNavigate();
+
+  console.log("tickets", tickets);
 
   const fetchEvents = useCallback(async () => {
     if (userSelector && userSelector.id) {
@@ -54,6 +57,22 @@ export const Dashboard = () => {
   useEffect(() => {
     fetchEvents();
   }, [fetchEvents]);
+
+  const fetchTickets = useCallback(async () => {
+    if (userSelector && userSelector.id) {
+      try {
+        const res = await api.get(`/events`);
+        setTikets(res.data); // Mengisi state tikets dengan data tiket dari API
+      } catch (error) {
+        console.error("Error fetching tickets:", error);
+      }
+    }
+  }, [userSelector]);
+
+  useEffect(() => {
+    fetchEvents();
+    fetchTickets();
+  }, [fetchEvents, fetchTickets]);
 
   const del = async (id) => {
     const msg = "Are You Sure Want To Delete Event?";
@@ -89,6 +108,7 @@ export const Dashboard = () => {
             <TabList>
               <Tab>Profile</Tab>
               <Tab>Events</Tab>
+              <Tab>Your Ticket</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -103,6 +123,14 @@ export const Dashboard = () => {
                   onEdit={update}
                 />
                 <Button onClick={onOpen}>Create Event</Button>
+              </TabPanel>
+              <TabPanel>
+                <YourTickets
+                  tickets={tickets}
+                  profleId={userSelector.id}
+                  fetchEvents={fetchEvents}
+                  fetchTickets={fetchTickets}
+                />
               </TabPanel>
             </TabPanels>
           </Tabs>
