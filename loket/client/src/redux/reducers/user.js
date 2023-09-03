@@ -25,7 +25,6 @@ export const userReducer = (state = init_state, action) => {
       password: action.payload.password,
       referralCode: action.payload.referralCode,
       referralCodeFromFriend: action.payload.referralCodeFromFriend,
-      credit: action.payload.credit,
       participants: action.payload.participant,
       isAuthenticated: action.payload.isAuthenticated,
     };

@@ -12,55 +12,76 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 import { api } from "../api/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { types } from "../redux/reducers/types";
+import { userLogin } from "../redux/middleware/user-middleware";
 
-export const SimpleCard = ({ users = [] }) => {
-  const nav = useNavigate();
-  const [user, setUser] = useState({
-    password: "",
-    email: "",
-  });
-  const InputHandler = (key, value) => {
-    setUser({ ...user, [key]: value });
-  };
-
+export const SimpleCard = () => {
+  const toast = useToast();
   const dispatch = useDispatch();
+  const nav = useNavigate();
 
-  const userSelector = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (userSelector.id) nav("/home");
-  }, []);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        const result = await dispatch(userLogin(values));
+        if (result === types.succes) {
+          nav("/home");
+        }
+      } catch (error) {
+        console.error("error dkit:", error.message);
+        toast({
+          title: "Login Gagal",
+          description: error.message, // cek error
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    },
+  });
+  // const InputHandler = (key, value) => {
+  //   setUser({ ...user, [key]: value });
+  // };
 
-  const [isLoading, setIsLoading] = useState(true);
+  // const userSelector = useSelector((state) => state.auth);
+  // useEffect(() => {
+  //   if (userSelector.id) nav("/home");
+  // }, []);
 
-  const login = async () => {
-    const auth = await api.get(`/users`, {
-      params: {
-        ...user,
-      },
-    });
+  // const login = async () => {
+  //   const auth = await api.get(`/users/v2`, {
+  //     params: {
+  //       ...user,
+  //     },
+  //   });
 
-    if (!auth.data) return alert("email/password salah");
-    console.log("auth.data login", auth.data);
-    delete auth.data[0].password;
-    dispatch({
-      type: types.login,
-      payload: { ...auth.data[0] },
-    });
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+  //   if (!auth.data) return alert("email/password salah");
+  //   console.log("auth.data login", auth.data);
+  //   delete auth.data[0].password;
+  //   dispatch({
+  //     type: types.login,
+  //     payload: { ...auth.data[0] },
+  //   });
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000);
 
-    localStorage.setItem("auth", JSON.stringify(auth.data[0]));
-    alert(`Hello`);
-    nav("/home");
-  };
-  useEffect(() => {}, [userSelector]);
+  //   localStorage.setItem("auth", JSON.stringify(auth.data[0]));
+  //   alert(`Hello`);
+  //   nav("/home");
+  // };
+  useEffect(() => {}, []);
 
   return (
     <Flex
@@ -88,7 +109,7 @@ export const SimpleCard = ({ users = [] }) => {
               <Input
                 type="email"
                 required
-                onChange={(e) => InputHandler("email", e.target.value)}
+                onChange={(e) => formik.setFieldValue("email", e.target.value)}
               />
             </FormControl>
             <FormControl id="password">
@@ -96,7 +117,9 @@ export const SimpleCard = ({ users = [] }) => {
               <Input
                 type="password"
                 required
-                onChange={(e) => InputHandler("password", e.target.value)}
+                onChange={(e) =>
+                  formik.setFieldValue("password", e.target.value)
+                }
               />
             </FormControl>
             <Stack spacing={10}>
@@ -109,7 +132,7 @@ export const SimpleCard = ({ users = [] }) => {
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button
-                onClick={login}
+                onClick={formik.handleSubmit}
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{

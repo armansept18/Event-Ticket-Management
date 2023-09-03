@@ -20,29 +20,29 @@ function App() {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const local = JSON.parse(localStorage.getItem("auth"));
-    // setUsers(local ? JSON.parse(local) : users);
-    console.log(local);
-    if (local) {
-      dispatch({
-        type: types.login,
-        payload: { ...local },
-      });
-    } else if (local) {
-      dispatch({
-        type: types.logout,
-        payload: { ...local },
-      });
-    }
+  // useEffect(() => {
+  //   const local = JSON.parse(localStorage.getItem("auth"));
+  //   // setUsers(local ? JSON.parse(local) : users);
+  //   console.log(local);
+  //   if (local) {
+  //     dispatch({
+  //       type: types.login,
+  //       payload: { ...local },
+  //     });
+  //   } else if (local) {
+  //     dispatch({
+  //       type: types.logout,
+  //       payload: { ...local },
+  //     });
+  //   }
 
-    console.log(userSelector);
-  }, []);
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 2000);
+  //   console.log(userSelector);
+  // }, []);
+  // setTimeout(() => {
+  //   setIsLoading(false);
+  // }, 2000);
 
-  console.log("search :>> ", search);
+  // console.log("search :>> ", search);
 
   return (
     <>

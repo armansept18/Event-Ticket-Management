@@ -17,7 +17,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "formik": "^2.4.3",
     "framer-motion": "^10.15.0",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "mysql2": "^3.6.0",
     "react": "^18.2.0",
@@ -30,7 +32,9 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "referral-codes": "^2.0.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.2.0",
+    "yup-password": "^0.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
