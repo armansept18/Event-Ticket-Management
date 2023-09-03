@@ -1,5 +1,5 @@
 const db = require("../models");
-const Entity = require("./entity"); // Perhatikan perubahan dari "./enity" ke "./entity"
+const Entity = require("../entities/entity"); // Perhatikan perubahan dari "./enity" ke "./entity"
 const bcrypt = require("bcrypt");
 class User extends Entity {
   constructor(model) {

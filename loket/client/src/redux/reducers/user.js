@@ -11,6 +11,7 @@ const init_state = {
   credit: 0,
   participants: [],
   isAuthenticated: false,
+  auth: {},
 };
 
 export const userReducer = (state = init_state, action) => {
@@ -27,6 +28,7 @@ export const userReducer = (state = init_state, action) => {
       referralCodeFromFriend: action.payload.referralCodeFromFriend,
       participants: action.payload.participant,
       isAuthenticated: action.payload.isAuthenticated,
+      auth: action.payload.auth,
     };
   } else if (action.type === types.logout) return init_state;
   return state;
