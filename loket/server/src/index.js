@@ -15,5 +15,5 @@ app.use("/users", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`LISTEN ON PORT ${PORT}`);
-    // db.sequelize.sync({alter: true});
+  // db.sequelize.sync({ alter: true });
 });

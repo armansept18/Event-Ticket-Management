@@ -47,8 +47,14 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Event = require("./event")(sequelize, Sequelize);
-db.Carousel = require("./carousel")(sequelize, Sequelize);
-db.User = require("./user")(sequelize, Sequelize);
+const insertModel = (path) => {
+  const model = require(path)(sequelize, Sequelize);
+  model.associate(db);
+  return model;
+};
+
+db.Event = insertModel("./event");
+db.Carousel = insertModel("./carousel");
+db.User = insertModel("./user");
 
 module.exports = db;
