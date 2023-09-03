@@ -40,11 +40,27 @@ const eventControllers = {
   },
   getAllEventWithUser(req,res) {
     db.Event.findAll({
-      include: {model: db.User, as: user},
+      include: {model: db.User, as: "users"},
     })
       .then((result) => res.send(result))
       .catch((err) => res.status(500).send(err?.message))
   },
+  async createUserAndEvent(req,res){
+    try {
+      await db.sequelize.transaction(async (t) => {
+        const newUser = await db.User.create(
+          { ...req.body.users },
+          { transaction: t }
+        );
+        const events = { ...req.body.events, userid: newUser.dataValues.id };
+        await db.Event.create({ ...events }, { transaction: t });
+        return res.send({ message: "EVENT AND USER SUCCESSFULLY ADDED!" });
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ message: err?.message });
+    }
+  }
 };
 
 module.exports = eventControllers;
