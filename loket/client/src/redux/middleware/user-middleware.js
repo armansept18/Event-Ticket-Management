@@ -7,11 +7,12 @@ export const userLogin = (values) => {
       const res = await api.post("/users/v2", {
         ...values,
       });
-      console.log(res.data.length);
+
       // if (!res.data.id) throw new Error("wrong username/password");
 
-      const user = res.data.user;
+      const user = res.data.token;
       localStorage.setItem("auth", res.data.token);
+      console.log(res.data.token, "token");
       dispatch({
         type: types.login,
         payload: user,
