@@ -1,17 +1,14 @@
 import { types } from "./types";
 
 const init_state = {
-  id: 0,
+  id: null,
   fullname: "",
   email: "",
   password: "",
   referralCode: "",
-  credit: "",
-  referralCodeFromFriend: "",
   credit: 0,
+  referralCodeFromFriend: "",
   participants: [],
-  isAuthenticated: false,
-  auth: {},
 };
 
 export const userReducer = (state = init_state, action) => {
@@ -24,12 +21,11 @@ export const userReducer = (state = init_state, action) => {
       credit: action.payload.credit,
       referralCode: action.payload.referralCode,
       password: action.payload.password,
-      referralCode: action.payload.referralCode,
       referralCodeFromFriend: action.payload.referralCodeFromFriend,
-      participants: action.payload.participant,
-      isAuthenticated: action.payload.isAuthenticated,
-      auth: action.payload.auth,
+      participants: action.payload.participants,
     };
-  } else if (action.type === types.logout) return init_state;
+  } else if (action.type === types.logout) {
+    return init_state;
+  }
   return state;
 };
