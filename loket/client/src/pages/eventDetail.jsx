@@ -12,7 +12,6 @@ import {
   Stack,
   Text,
   useColorModeValue,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { useSelector } from "react-redux";
@@ -30,14 +29,15 @@ export const EventDetail = () => {
   console.log("userDataFromLocalStorage eventDetail", userDataFromLocalStorage);
   useEffect(() => {
     const fetchEventDetails = async () => {
-      try {
-        const response = await api.get(`/events/${eventId}`);
-        setEventDetails(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching event details:", error);
-        setLoading(false);
-      }
+      await api
+        .get(`/events/${eventId}`)
+        .then((res) => {
+          setEventDetails(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     };
 
     fetchEventDetails();

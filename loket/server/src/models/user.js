@@ -20,6 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       referralCode: DataTypes.STRING,
       referralCodeFromFriend: DataTypes.STRING,
       credit: DataTypes.INTEGER,
+      reset_pass: DataTypes.STRING,
+      is_verified: { type: DataTypes.BOOLEAN, defaultValue: false },
+      login_attempt: DataTypes.INTEGER,
+      suspended_date: {
+        type: "TIMESTAMP",
+        defaultValue: sequelize.fn("NOW"),
+      },
     },
     {
       sequelize,

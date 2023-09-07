@@ -1,5 +1,8 @@
 const db = require("../models");
 const event = require("../models/event");
+const Event = require("../entities/events");
+const eventControllers = new Event("Event");
+
 const eventControllers = {
   getAll(req, res) {
     db.Event.findAll()

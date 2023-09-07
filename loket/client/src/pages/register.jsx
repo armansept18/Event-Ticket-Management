@@ -15,10 +15,24 @@ import { api } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { types } from "../redux/reducers/types";
+
+const generateReferralCode = () => {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+
+  for (let i = 0; i < 6; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    code += characters.charAt(randomIndex);
+  }
+
+  return code;
+};
 
 const Register = () => {
   const toast = useToast();
   const nav = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       fullname: "",
@@ -32,19 +46,21 @@ const Register = () => {
       password: Yup.string().min(5).required("Password is required"),
     }),
     onSubmit: async (values) => {
-      try {
-        await api.post("/users/v1", values);
-        nav("/login");
-      } catch (error) {
-        console.error(error);
-        toast({
-          title: "Error",
-          description: "Registration failed. Please try again.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-      }
+      const res = await api
+        .post("/users/v1", values)
+        .then(() => types.succes)
+        .catch((err) => err.message);
+
+      console.log(res);
+      if (res === types.succes) nav("/login");
+      toast(
+        toast,
+        res,
+        "Auth Register Success",
+        "new user has been added",
+        "Auth Register Failed",
+        res
+      );
     },
   });
 
