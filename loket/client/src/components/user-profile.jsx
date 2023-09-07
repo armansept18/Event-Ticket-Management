@@ -5,6 +5,25 @@ import { api } from "../api/axios";
 import jwt_decode from "jwt-decode";
 
 export const UserProfile = () => {
+  const userProfile = useSelector((state) => state.auth);
+  const [topUpAmount, setTopUpAmount] = useState("");
+  const [user, setUser] = useState([]);
+  const [events, setEvents] = useState([]);
+  const fetchUser = () => {
+    api
+      .get(`/users/:id${userProfile.id}`, userProfile.id)
+      .then((res) => {
+        setUser(res.data);
+        fetchUserEvent(res.data.id);
+      })
+      .catch((err) => console.log(err));
+  };
+  const fetchUserEvent = () => {
+    api
+      .get(`/events/user/${userProfile.id}`)
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  };
   const localStorageData = localStorage.getItem("auth");
 
   const token = localStorageData?.auth;

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -18,7 +18,6 @@ import {
   CloseButton,
   Avatar,
 } from "@chakra-ui/react";
-
 import {
   AiOutlineMenu,
   AiFillHome,
@@ -31,14 +30,39 @@ import { Input } from "@chakra-ui/react";
 import Loket from "../assets/loket.png";
 import { Search2Icon } from "@chakra-ui/icons";
 import { CalendarIcon } from "@chakra-ui/icons";
-
 import user from "../assets/user.png";
 import { BasicModal } from "./modal";
+import debounce from "lodash.debounce";
+import { api } from "../api/axios";
+import { useState } from "react";
 
-export default function Navbar(props) {
+export default function Navbar() {
   const token = localStorage.getItem("auth");
-  const { setSearch } = props;
+  const [search, setSearch] = useState("");
+  const [events, setEvents] = useState([]);
   const { onOpen, onClose, isOpen } = useDisclosure();
+
+  const debouncedFilter = useCallback(
+    debounce((query) => setSearch(query), 500)
+  );
+  const searching = (query) => {
+    if (!query) return setSearch("");
+    debouncedFilter(query);
+  };
+
+  const fetchEvent = () => {
+    api
+      .get("/events/search", {
+        params: {
+          search,
+        },
+      })
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    fetchEvent();
+  }, [search])
 
   return (
     <Box>
@@ -70,9 +94,7 @@ export default function Navbar(props) {
           <Input
             type="tel"
             placeholder="Cari event seru disini "
-            onKeyPress={(e) => {
-              if (e.key === "Enter") setSearch(e.target.value);
-            }}
+            onChange={(e) =>  searching(e.target.value)}
           />
         </InputGroup>
         <Stack

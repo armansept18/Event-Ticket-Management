@@ -23,7 +23,6 @@ export const EventDetail = () => {
   const { eventId } = useParams();
   const [eventDetails, setEventDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState({});
   console.log("user profile", user);
