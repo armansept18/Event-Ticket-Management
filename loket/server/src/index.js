@@ -4,10 +4,12 @@ const app = express();
 const PORT = process.env.PORT || 2000;
 const cors = require("cors");
 const db = require("./models");
+const bearer = require("express-bearer-token");
 const { eventRoutes, userRoutes, carouselRoutes } = require("./routes");
 
 app.use(cors());
 app.use(express.json());
+app.use(bearer());
 
 app.get("/", (req, res) => res.send("WELCOME TO EXPRESS API"));
 app.use("/events", eventRoutes);

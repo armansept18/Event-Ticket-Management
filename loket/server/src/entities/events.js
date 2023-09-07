@@ -1,5 +1,6 @@
 const db = require("../models");
 const Entity = require("../entities/entity");
+const jwt = require("jsonwebtoken");
 
 class Event extends Entity {
   constructor(model) {
@@ -15,12 +16,14 @@ class Event extends Entity {
   }
 
   async createEvent(req, res) {
-    const { userid } = req.user;
+    const { token } = req;
+    const dataToken = jwt.verify(token, process.env.jwt_secret);
     const eventData = req.body;
     try {
-      db.Event.create({ ...eventData, userid })
+      db.Event.create({ ...eventData, userid: dataToken.id })
         .then((result) => res.send({ message: `EVENT CREATED!` }))
-        .catch((err) => res.status(500).send(err?.message));
+        .catch((err) => res.status(500).send(err?.message, "tes"));
+      console.log(eventData);
     } catch (err) {
       console.log(err);
       res.status(500).send(err?.message);
