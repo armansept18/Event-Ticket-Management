@@ -21,10 +21,8 @@ route.get(
 );
 route.get("/:id", eventControllers.getById.bind(eventControllers));
 
-
 route.post("/", eventControllers.createEvent.bind(eventControllers));
 route.patch("/:id", eventControllers.editEvent.bind(eventControllers));
 route.delete("/:id", eventControllers.deleteById.bind(eventControllers));
-
 
 module.exports = route;
