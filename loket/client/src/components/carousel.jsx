@@ -21,25 +21,17 @@ const Carousel = () => {
   const [slider, setSlider] = useState(null);
   const top = useBreakpointValue({ base: "90%", md: "50%" });
   const side = useBreakpointValue({ base: "30%", md: "10px" });
+  const [carousel, setCarousel] = useState([]);
 
-  const [cards, setCards] = useState([]);
-
+  const fetchCarousel = () => {
+    api
+      .get("/carousels")
+      .then((res) => setCarousel(res.data))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await api.get("/carousel");
-        setCards(response.data);
-      } catch (error) {
-        console.error("Error fetching carousel data:", error);
-      }
-    };
-
-    fetchCards();
+    fetchCarousel();
   }, []);
-
-  if (!cards.length) {
-    return null;
-  }
 
   return (
     <Box
@@ -92,7 +84,7 @@ const Carousel = () => {
       </IconButton>
 
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
-        {cards.map((card, index) => (
+        {carousel.map((card, index) => (
           <Box
             key={index}
             height={"280px"}

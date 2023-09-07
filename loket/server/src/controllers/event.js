@@ -1,4 +1,5 @@
 const db = require("../models");
+const event = require("../models/event");
 const eventControllers = {
   getAll(req, res) {
     db.Event.findAll()
@@ -11,19 +12,7 @@ const eventControllers = {
       .then((result) => res.send(result))
       .catch((err) => res.status(500).send(err?.message));
   },
-  getByEventName(req, res) {
-    const { eventName } = req.query;
-    db.Event.findAll({
-      where: ({ eventName } = { [db.Sequelize.Op.like]: `%${eventName}%` }),
-    })
-      .then((result) => res.send(result))
-      .catch((err) => res.status(500).send(err?.message));
-  },
-  createEvent(req, res) {
-    db.Event.create({ ...req.body })
-      .then((result) => res.send({ message: `EVENT CREATED!` }))
-      .catch((err) => res.status(500).send(err?.message));
-  },
+
   editEvent(req, res) {
     const { id } = req.params;
     db.Event.update({ ...req.body }, { where: { id } })
@@ -38,14 +27,37 @@ const eventControllers = {
       .then((result) => res.send({ message: `EVENT ID ${id} DELETED!` }))
       .catch((err) => res.status(500).send({ message: err?.message }));
   },
-  getAllEventWithUser(req,res) {
+  async createEvent(req, res) {
+    const { userid } = req.user;
+    const eventData = req.body;
+    try {
+      db.Event.create({ ...eventData, userid })
+        .then((result) => res.send({ message: `EVENT CREATED!` }))
+        .catch((err) => res.status(500).send(err?.message));
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err?.message);
+    }
+  },
+  getAllEventWithUser(req, res) {
     db.Event.findAll({
-      include: {model: db.User, as: "users"},
+      include: { model: db.User, as: "user" },
     })
       .then((result) => res.send(result))
-      .catch((err) => res.status(500).send(err?.message))
+      .catch((err) => res.status(500).send(err?.message));
   },
-  async createUserAndEvent(req,res){
+  getEventByUserId(req, res) {
+    db.Event.findAll({
+      include: { model: db.User, as: "user" },
+      where: {
+        userid: req.params.userid,
+      },
+      order: [["createdAt", "DESC"]],
+    })
+      .then((result) => res.send(result))
+      .catch((err) => res.status(500).send(err?.message));
+  },
+  async createUserAndEvent(req, res) {
     try {
       await db.sequelize.transaction(async (t) => {
         const newUser = await db.User.create(
@@ -60,7 +72,20 @@ const eventControllers = {
       console.log(err);
       res.status(500).send({ message: err?.message });
     }
-  }
+  },
+  getEventByFilter(req, res) {
+    const { location, category } = req.query;
+    db.Event.findAll({
+      where: {
+        [db.Sequelize.Op.or]: {
+          location: { [db.Sequelize.Op.like]: `%${location}%` },
+          category: { [db.Sequelize.Op.like]: `%${category}%` },
+        },
+      },
+    })
+      .then((result) => res.send(result))
+      .catch((err) => res.status(500).send(err?.message));
+  },
 };
 
 module.exports = eventControllers;

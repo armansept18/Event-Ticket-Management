@@ -3,8 +3,9 @@ const eventControllers = require("../controllers/event");
 const route = express.Router();
 
 route.get("/", eventControllers.getAll);
-route.get("/name", eventControllers.getByEventName);
+route.get("/search", eventControllers.getEventByFilter);
 route.get("/users", eventControllers.getAllEventWithUser);
+route.get("/user/:userid", eventControllers.getEventByUserId);
 route.get("/:id", eventControllers.getById);
 
 route.post("/", eventControllers.createEvent);

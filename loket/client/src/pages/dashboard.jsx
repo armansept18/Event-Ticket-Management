@@ -40,7 +40,7 @@ export const Dashboard = () => {
   const fetchEvents = useCallback(async () => {
     if (userSelector && userSelector.id) {
       try {
-        const res = await api.get(`/events`);
+        const res = await api.get(`/events/users`);
         setEvents(res.data);
         // setEvents(res.data.filter(item => item.createdBy === userSelector.id));
       } catch (error) {

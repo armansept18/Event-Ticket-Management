@@ -5,15 +5,15 @@ import { Center } from "@chakra-ui/react";
 import LoadingPage from "../components/loading";
 
 
-export const EventListPage = ({ search }) => {
+export const EventListPage = ({ searching }) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchEvents = async () => {
     try {
       const res = await api.get("/events", {
-        params: { eventName_like: search },
-        params2: { location_like: search },
+        params: { category_like: searching },
+        params2: { location_like: searching },
       });
       setEvents([...res.data]);
       setLoading(false);
@@ -24,7 +24,7 @@ export const EventListPage = ({ search }) => {
   };
   useEffect(() => {
     fetchEvents();
-  }, [search]);
+  }, [searching]);
 
   return (
     <>
