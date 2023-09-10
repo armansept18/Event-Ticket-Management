@@ -42,6 +42,10 @@ class Event extends Entity {
     const dataToken = jwt.verify(token, process.env.jwt_secret);
     const eventData = req.body;
     try {
+      const eventCreate = await db.Event.create({
+        ...eventData,
+        userid: dataToken.id,
+      }).then((result) => result);
       db.Event.create({
         ...eventData,
         userid: dataToken.id,
@@ -49,6 +53,10 @@ class Event extends Entity {
         .then((result) => res.send({ message: `EVENT CREATED!` }))
         .catch((err) => res.status(500).send(err?.message, "tes"));
       console.log(eventData);
+      res.status(200).json({
+        message: "Event Created!",
+        eventCreate,
+      });
     } catch (err) {
       console.log(err);
       res.status(500).send(err?.message);
