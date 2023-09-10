@@ -6,11 +6,11 @@ class Event extends Entity {
   constructor(model) {
     super(model);
   }
-  
+
   async editEvent(req, res) {
     const { id } = req.params;
     const eventData = req.body;
-    const {token} = req.headers;
+    const { token } = req;
 
     if (!token) {
       return res
@@ -45,7 +45,7 @@ class Event extends Entity {
     }
   }
   async createEvent(req, res) {
-    const { token } = req.headers;
+    const { token } = req;
 
     if (!token) {
       return res.status(401).send("Authentication token required");
@@ -71,7 +71,7 @@ class Event extends Entity {
   }
   async deleteEvent(req, res) {
     const { id } = req.params;
-    const {token } = req.headers;
+    const { token } = req;
 
     if (!token) {
       return res

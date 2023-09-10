@@ -17,7 +17,7 @@ route.get("/:id", eventControllers.getById.bind(eventControllers));
 
 route.post(
   "/",
-  check_verified,
+  verifyToken1,
   uploadFile({
     destinationFolder: "event",
     prefix: "new-event",
@@ -27,7 +27,7 @@ route.post(
 );
 route.patch(
   "/:id",
-  check_verified,
+  verifyToken1,
   uploadFile({
     destinationFolder: "event",
     prefix: "new-event",
@@ -35,6 +35,6 @@ route.patch(
   }).single("image"),
   eventControllers.editEvent.bind(eventControllers)
 );
-route.delete("/:id", check_verified, eventControllers.deleteEvent.bind(eventControllers));
+route.delete("/:id", verifyToken1, eventControllers.deleteEvent.bind(eventControllers));
 
 module.exports = route;
