@@ -131,7 +131,7 @@ class OrderEvents extends Entity {
           where: { referralCodeFromFriend },
         });
 
-        if (referredUser && !referredUser.referralCodeFromFriend) {
+        if (referredUser && !referredUser.referralCodeFromFriendUsed) {
           // Jika referral code from friend valid dan belum digunakan oleh pengguna lain
           const discount = totalPrice - 10000;
           totalPrice -= discount;
@@ -140,7 +140,6 @@ class OrderEvents extends Entity {
           await referredUser.update({
             referralCodeFromFriendUsed: userData.refferalcode,
           });
-          console.log(referredUser);
         }
       }
 
