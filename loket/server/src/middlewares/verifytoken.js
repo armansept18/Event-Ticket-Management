@@ -4,7 +4,7 @@ const verifyToken1 = (req, res, next) => {
   const token = req.header("Authorization");
 
   if (!token) {
-    return res.status(401).json({ message: "gagal" });
+    return res.status(401).json({ message: "Unauthorized: Missing Token!" });
   }
 
   const tokenString = token.replace("Bearer ", "");
@@ -14,9 +14,7 @@ const verifyToken1 = (req, res, next) => {
 
     // Memeriksa apakah user_id dalam token cocok dengan user_id pengguna yang login
     if (dataToken.user_id !== req.user_id) {
-      return res
-        .status(401)
-        .send({ message: "Token tidak valid untuk pengguna ini." });
+      return res.status(401).send({ message: "Unauthorized: Invalid Token User!" });
     }
 
     req.user = dataToken;

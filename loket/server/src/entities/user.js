@@ -22,7 +22,7 @@ class User extends Entity {
     })
       .then(async (result) => {
         if (!result) {
-          return res.status(404).send("User not found");
+          return res.status(404).send("User Not Found!");
         }
 
         console.log(
@@ -92,7 +92,7 @@ class User extends Entity {
     db.User.findOne({ where: { email } })
       .then(async (existingUser) => {
         if (existingUser) {
-          res.status(400).send({ message: "Email sudah terdaftar boy" });
+          res.status(400).send({ message: "Email Already Registered!" });
         } else {
           try {
             // untuk regenerate reffCode nya
@@ -142,7 +142,7 @@ class User extends Entity {
       console.log(token);
       const data = jwt.verify(token, process.env.jwt_secret);
       console.log(data);
-      if (!data.id) throw new Error("token salah dikit ");
+      if (!data.id) throw new Error("Invalid Token!");
 
       console.log(data);
 
@@ -178,7 +178,7 @@ class User extends Entity {
       const user = await db.User.findByPk(id);
 
       if (!user) {
-        return res.status(404).send("User not found");
+        return res.status(404).send("User not found!");
       }
 
       const currentCredit = user.credit || 0;
@@ -202,7 +202,7 @@ class User extends Entity {
       const { token } = req.query;
       const payload = jwt.verify(token, process.env.jwt_secret);
 
-      if (payload.is_verified) throw new Error("user udah verify");
+      if (payload.is_verified) throw new Error("User Verified!");
       await db.User.update(
         {
           is_verified: true,
@@ -213,7 +213,7 @@ class User extends Entity {
           },
         }
       );
-      res.send("user belum verify");
+      res.send("User Not Verified!");
     } catch (err) {
       res.status(500).send(err?.message);
     }

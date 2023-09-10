@@ -27,7 +27,7 @@ route.get("/token", userController.alwaysLogin.bind(userController));
 // untuk verify user (hanya user yg udh verify yg bisa create events)
 route.post("/verify/", userController.verify.bind(userController));
 route.post(
-  "/top",
+  "/topup",
   verifyToken1,
   userController.topupCredit.bind(userController)
 );
