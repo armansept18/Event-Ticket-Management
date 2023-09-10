@@ -8,6 +8,16 @@ const bearer = require("express-bearer-token");
 const { eventRoutes, userRoutes, carouselRoutes } = require("./routes");
 // const bodyParser = require("body-parser");
 
+const {
+  eventRoutes,
+  userRoutes,
+  carouselRoutes,
+  orderRoutes,
+} = require("./routes");
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 app.use(bearer());
@@ -17,6 +27,7 @@ app.get("/", (req, res) => res.send("WELCOME TO EXPRESS API"));
 app.use("/events", eventRoutes);
 app.use("/users", userRoutes);
 app.use("/carousels", carouselRoutes);
+app.use("/orders", orderRoutes);
 
 app.listen(PORT, () => {
   console.log(`LISTEN ON PORT ${PORT}🚀`);

@@ -2,7 +2,8 @@ const express = require("express");
 const eventControllers = require("../controllers/event");
 const check_verified = require("../middlewares/auth");
 const uploadFile = require("../middlewares/multer");
-const verifyToken1 = require("../middlewares/auth");
+const verifyToken1 = require("../middlewares/verifyToken");
+
 const route = express.Router();
 
 route.get("/", eventControllers.getAll.bind(eventControllers));

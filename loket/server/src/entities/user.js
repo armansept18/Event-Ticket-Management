@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 const shortid = require("shortid");
+const user = require("../models/user");
 class User extends Entity {
   constructor(model) {
     super(model);
@@ -165,6 +166,37 @@ class User extends Entity {
       res.status(500).send(err?.message);
     }
   }
+  async topupCredit(req, res) {
+    try {
+      const { amount } = req.body;
+      const { id } = req.user;
+
+      if (!amount || isNaN(amount) || amount <= 0) {
+        return res.status(400);
+      }
+
+      const user = await db.User.findByPk(id);
+
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      const currentCredit = user.credit || 0;
+
+      const newCredit = currentCredit + amount;
+
+      await user.update({ credit: newCredit });
+
+      const formattedCredit = newCredit.toLocaleString("en-US", {});
+
+      return res.send(
+        `Top-up credit berhasil. Saldo credit baru: ${formattedCredit}`
+      );
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
+
   async verify(req, res) {
     try {
       const { token } = req.query;

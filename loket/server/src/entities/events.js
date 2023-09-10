@@ -6,6 +6,7 @@ class Event extends Entity {
   constructor(model) {
     super(model);
   }
+  
   async editEvent(req, res) {
     const { id } = req.params;
     const eventData = req.body;
@@ -146,6 +147,79 @@ class Event extends Entity {
     })
       .then((result) => res.send(result))
       .catch((err) => res.status(500).send(err?.message));
+  }
+  authenticate(req, res, next) {
+    const token = req.header("Authorization");
+
+    if (!token) {
+      return res
+        .status(400)
+        .send({ message: "Token diperlukan untuk pendaftaran acara." });
+    }
+
+    // Menghilangkan kata "Bearer " dari token untuk mendapatkan token
+    const tokenString = token.replace("Bearer ", "");
+
+    try {
+      const dataToken = jwt.verify(tokenString, process.env.jwt_secret);
+      req.user = dataToken;
+      next(); // Lanjutkan ke penanganan pendaftaran setelah autentikasi berhasil
+    } catch (error) {
+      return res.status(401).send({ message: "Token otentikasi tidak valid." });
+    }
+  }
+  async registerParticipant(req, res) {
+    const { token } = req;
+    const { fullname, email } = req.body;
+    const { id: eventId } = req.params;
+
+    if (!token) {
+      return res
+        .status(400)
+        .send({ message: "Token diperlukan untuk pendaftaran acara." });
+    }
+
+    try {
+      // Verifikasi token untuk mendapatkan data pengguna
+      const dataToken = jwt.verify(token, process.env.jwt_secret);
+
+      // Buat peserta baru
+      const participant = await db.Participant.create({
+        fullname,
+        email,
+        // Menggunakan eventId dari parameter URL
+        userId: dataToken.id, // Menggunakan ID pengguna dari token
+      });
+
+      const transaction = await this.createTransaction(participant.id, eventId);
+
+      return res.status(201).send({
+        message: "Pendaftaran peserta berhasil.",
+        participant,
+        transaction,
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .send({ message: "Terjadi kesalahan dalam pendaftaran peserta." });
+    }
+  }
+
+  async createTransaction(participantId, eventId) {
+    try {
+      // Buat transaksi terkait dengan pendaftaran peserta
+      const transaction = await db.Transaction.create({
+        participantId,
+        eventId,
+        // Jumlah pembayaran atau informasi pembayaran lainnya bisa ditambahkan di sini
+      });
+
+      return transaction;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Terjadi kesalahan dalam pembuatan transaksi.");
+    }
   }
 }
 module.exports = Event;
