@@ -28,7 +28,7 @@ class Entity {
       .destroy({
         where: { id },
       })
-      .then(() => res.send({ message: "success" }))
+      .then(() => res.send({ message: `Event ID: ${id} Deleted!` }))
       .catch((err) => res.status(500).send(err.message));
   }
   updateById(req, res) {

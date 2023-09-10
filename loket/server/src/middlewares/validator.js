@@ -3,7 +3,6 @@ const { body, validationResult } = require("express-validator");
 const userValidationRules = () => {
   return [
     body("email").isEmail().withMessage("bukan email. tambahkan @ "),
-
     body("password").isLength({ min: 5 }).withMessage("password kurang dari 5"),
   ];
 };

@@ -1,13 +1,13 @@
 const jwt = require("jsonwebtoken");
-
-const verifyToken = (req, res, next) => {
+const check_verified = (req, res, next) => {
   try {
-    const data = jwt.verify(token.process.env.jwt_secret);
-    if(data.id != req.query.userid) throw new Error (`Invalid User!`);
+    const { token } = req.query;
+    const data = jwt.verify(token, process.env.jwt_secret);
+    if (!Number(data.is_verified)) throw new Error("User Not Verified!");
+    if (data.id != req.query.userid) throw new Error("Invalid User!");
     next();
-  } catch (error) {
+  } catch (err) {
     return res.status(401).send(err?.message);
   }
 };
-
-module.exports = verifyToken;
+module.exports = check_verified;

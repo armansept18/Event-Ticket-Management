@@ -8,9 +8,13 @@ class Event extends Entity {
   }
   editEvent(req, res) {
     const { id } = req.params;
+    const eventData = req.body;
+    if (req?.file?.filename) {
+      eventData.imageUrl = req.file.filename;
+    }
     db.Event.update({ ...req.body }, { where: { id } })
       .then((result) =>
-        res.send({ message: `EVENT ID ${id} SUCCESSFULLY EDITED!` })
+        res.send({ message: `Event ID ${id} Successfully Edited!` })
       )
       .catch((err) => res.status(500).send(err?.message));
   }
@@ -19,6 +23,9 @@ class Event extends Entity {
     const { token } = req;
     const dataToken = jwt.verify(token, process.env.jwt_secret);
     const eventData = req.body;
+    if (req?.file?.filename) {
+      eventData.imageUrl = req.file.filename;
+    }
     try {
       const eventCreate = await db.Event.create({
         ...eventData,
