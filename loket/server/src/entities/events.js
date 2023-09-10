@@ -50,6 +50,7 @@ class Event extends Entity {
         ...eventData,
         userid: dataToken.id,
       })
+
         .then((result) => res.send({ message: `EVENT CREATED!` }))
         .catch((err) => res.status(500).send(err?.message, "tes"));
       console.log(eventData);

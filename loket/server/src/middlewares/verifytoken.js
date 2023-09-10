@@ -6,12 +6,21 @@ const verifyToken1 = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: "gagal" });
   }
+
   const tokenString = token.replace("Bearer ", "");
 
   try {
     const dataToken = jwt.verify(tokenString, process.env.jwt_secret);
+
+    // Memeriksa apakah user_id dalam token cocok dengan user_id pengguna yang login
+    if (dataToken.user_id !== req.user_id) {
+      return res
+        .status(401)
+        .send({ message: "Token tidak valid untuk pengguna ini." });
+    }
+
     req.user = dataToken;
-    next(); // Lanjutkan ke penanganan pendaftaran setelah autentikasi berhasil
+    next();
   } catch (error) {
     return res.status(401).send({ message: "Token otentikasi tidak valid." });
   }

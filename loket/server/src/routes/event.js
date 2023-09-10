@@ -1,5 +1,6 @@
 const express = require("express");
 const eventControllers = require("../controllers/event");
+const verifyToken1 = require("../middlewares/verifyToken");
 
 const route = express.Router();
 
@@ -22,7 +23,11 @@ route.get(
 );
 route.get("/:id", eventControllers.getById.bind(eventControllers));
 
-route.post("/", eventControllers.createEvent.bind(eventControllers));
+route.post(
+  "/",
+  verifyToken1,
+  eventControllers.createEvent.bind(eventControllers)
+);
 route.patch("/:id", eventControllers.editEvent.bind(eventControllers));
 route.delete("/:id", eventControllers.deleteById.bind(eventControllers));
 
