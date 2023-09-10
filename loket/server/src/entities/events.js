@@ -6,19 +6,40 @@ class Event extends Entity {
   constructor(model) {
     super(model);
   }
-  editEvent(req, res) {
+  async editEvent(req, res) {
     const { id } = req.params;
     const eventData = req.body;
     if (req?.file?.filename) {
       eventData.imageUrl = req.file.filename;
     }
-    db.Event.update({ ...req.body }, { where: { id } })
-      .then((result) =>
-        res.send({ message: `Event ID ${id} Successfully Edited!` })
-      )
-      .catch((err) => res.status(500).send(err?.message));
+    try {
+      const existingEvent = await db.Event.findByPk(id);
+      if (!existingEvent) {
+        return res
+          .status(401)
+          .json({ message: `Event with ID ${id} not found!` });
+      }
+      if (existingEvent.userid !== dataToken.id) {
+        return res
+          .status(403)
+          .json({
+            message: `Unauthorized: You are not the owner of this event!`,
+          });
+      }
+      await existingEvent.update({
+        ...eventData,
+      });
+      res
+        .status(200)
+        .json({
+          message: `Event with ID ${id} successfully edited!`,
+          updatedEvent: existingEvent,
+        });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error?.message);
+    }
   }
-
   async createEvent(req, res) {
     const { token } = req;
     const dataToken = jwt.verify(token, process.env.jwt_secret);
@@ -27,6 +48,11 @@ class Event extends Entity {
       eventData.imageUrl = req.file.filename;
     }
     try {
+      if (!dataToken) {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized: User Not Logged In!" });
+      }
       const eventCreate = await db.Event.create({
         ...eventData,
         userid: dataToken.id,
@@ -41,6 +67,34 @@ class Event extends Entity {
       res.status(500).send(err?.message);
     }
   }
+  async deleteEvent(req, res) {
+    const { id } = req.params;
+
+    try {
+      const existingEvent = await db.Event.findByPk(id);
+
+      if (!existingEvent) {
+        return res
+          .status(404)
+          .json({ message: `Event with ID ${id} not found!` });
+      }
+      if (existingEvent.userid !== dataToken.id) {
+        return res
+          .status(403)
+          .json({
+            message: `Unauthorized: You are not the owner of this event!`,
+          });
+      }
+      await existingEvent.destroy();
+      res
+        .status(200)
+        .json({ message: `Event with ID ${id} succesfully deleted!` });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error?.message);
+    }
+  }
+
   getAllEventWithUser(req, res) {
     db.Event.findAll({
       include: { model: db.User, as: "user" },

@@ -15,16 +15,30 @@ route.get(
 route.get("/user/:userid", eventControllers.getEventByUserId);
 route.get("/:id", eventControllers.getById.bind(eventControllers));
 
-route.post("/", uploadFile({
-  destinationFolder: 'event',
-  prefix: 'new-event',
-  filetype: 'image'
-}).single('image'), eventControllers.createEvent.bind(eventControllers));
-route.patch("/:id", uploadFile({
-  destinationFolder: 'event',
-  prefix: 'new-event',
-  filetype: 'image'
-}).single('image'), eventControllers.editEvent.bind(eventControllers));
-route.delete("/:id", eventControllers.deleteById.bind(eventControllers));
+route.post(
+  "/",
+  check_verified,
+  uploadFile({
+    destinationFolder: "event",
+    prefix: "new-event",
+    filetype: "image",
+  }).single("image"),
+  eventControllers.createEvent.bind(eventControllers)
+);
+route.patch(
+  "/:id",
+  check_verified,
+  uploadFile({
+    destinationFolder: "event",
+    prefix: "new-event",
+    filetype: "image",
+  }).single("image"),
+  eventControllers.editEvent.bind(eventControllers)
+);
+route.delete(
+  "/:id",
+  check_verified,
+  eventControllers.deleteEvent.bind(eventControllers)
+);
 
 module.exports = route;

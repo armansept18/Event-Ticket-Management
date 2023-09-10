@@ -1,13 +1,14 @@
 const jwt = require("jsonwebtoken");
 const check_verified = (req, res, next) => {
-  try {
-    const { token } = req.query;
-    const data = jwt.verify(token, process.env.jwt_secret);
-    if (!Number(data.is_verified)) throw new Error("User Not Verified!");
-    if (data.id != req.query.userid) throw new Error("Invalid User!");
-    next();
-  } catch (err) {
-    return res.status(401).send(err?.message);
-  }
+  const token = req.header('Authorization');
+    if(!token) {
+      return res.status(401).json({message: 'Unauthorized: Missing Token!'})
+    }
+    try {
+      const decoded = jwt.verify(token, process.env.jwt_secret);
+      req.token = decoded;
+    } catch (error) {
+      return res.status(401).json({message: 'Unauthorized: Invalid Token!'})
+    }
 };
 module.exports = check_verified;

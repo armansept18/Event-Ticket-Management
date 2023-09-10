@@ -78,7 +78,7 @@ class User extends Entity {
         const token = jwt.sign(payload, process.env.jwt_secret, {
           expiresIn: "1h",
         });
-
+        console.log(token);
         return res.send({ token, user: result });
       })
       .catch((err) => {
