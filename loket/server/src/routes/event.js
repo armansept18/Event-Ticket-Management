@@ -2,9 +2,8 @@ const express = require("express");
 const eventControllers = require("../controllers/event");
 const check_verified = require("../middlewares/auth");
 const uploadFile = require("../middlewares/multer");
+const verifyToken1 = require("../middlewares/auth");
 const route = express.Router();
-
-// route.patch("/:id", eventControllers.editEvent, eventControllers.getById);
 
 route.get("/", eventControllers.getAll.bind(eventControllers));
 route.get("/search", eventControllers.getEventByFilter.bind(eventControllers));
@@ -35,10 +34,6 @@ route.patch(
   }).single("image"),
   eventControllers.editEvent.bind(eventControllers)
 );
-route.delete(
-  "/:id",
-  check_verified,
-  eventControllers.deleteEvent.bind(eventControllers)
-);
+route.delete("/:id", check_verified, eventControllers.deleteEvent.bind(eventControllers));
 
 module.exports = route;
