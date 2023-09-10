@@ -5,8 +5,6 @@ const PORT = process.env.PORT || 2000;
 const cors = require("cors");
 const db = require("./models");
 const bearer = require("express-bearer-token");
-const { eventRoutes, userRoutes, carouselRoutes } = require("./routes");
-// const bodyParser = require("body-parser");
 
 const {
   eventRoutes,

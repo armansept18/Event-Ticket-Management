@@ -1,8 +1,8 @@
 const express = require("express");
 const userController = require("../controllers/user");
 const { validate, userValidationRules } = require("../middlewares/validator");
+const verifyToken1 = require("../middlewares/verifyToken");
 const route = express.Router();
-const verifytoken = require("../middlewares/verifytoken");
 
 //get all user
 route.get("/", userController.getAll.bind(userController));
@@ -28,7 +28,7 @@ route.get("/token", userController.alwaysLogin.bind(userController));
 route.post("/verify/", userController.verify.bind(userController));
 route.post(
   "/top",
-  verifytoken,
+  verifyToken1,
   userController.topupCredit.bind(userController)
 );
 
