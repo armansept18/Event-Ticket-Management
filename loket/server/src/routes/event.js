@@ -1,6 +1,6 @@
 const express = require("express");
 const eventControllers = require("../controllers/event");
-const check_verified = require("../middlewares/auth");
+
 const uploadFile = require("../middlewares/multer");
 const verifyToken1 = require("../middlewares/verifyToken");
 
@@ -35,6 +35,10 @@ route.patch(
   }).single("image"),
   eventControllers.editEvent.bind(eventControllers)
 );
-route.delete("/:id", verifyToken1, eventControllers.deleteEvent.bind(eventControllers));
+route.delete(
+  "/:id",
+  verifyToken1,
+  eventControllers.deleteById.bind(eventControllers)
+);
 
 module.exports = route;

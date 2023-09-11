@@ -18,7 +18,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: DataTypes.STRING,
       referralCode: DataTypes.STRING,
-      referralCodeFromFriend: DataTypes.STRING,
+      referralCodeFromFriend: {
+        type: DataTypes.STRING, // Tipe data yang sesuai
+        // Izinkan nilai null jika tidak ada referral code dari teman
+      },
+      // purchasedEvent: DataTypes.INTEGER,
       credit: DataTypes.INTEGER,
       reset_pass: DataTypes.STRING,
       is_verified: { type: DataTypes.BOOLEAN, defaultValue: false },

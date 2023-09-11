@@ -11,6 +11,7 @@ const {
   userRoutes,
   carouselRoutes,
   orderRoutes,
+  dashboardRoutes,
 } = require("./routes");
 const bodyParser = require("body-parser");
 
@@ -26,6 +27,7 @@ app.use("/events", eventRoutes);
 app.use("/users", userRoutes);
 app.use("/carousels", carouselRoutes);
 app.use("/orders", orderRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 app.listen(PORT, () => {
   console.log(`LISTEN ON PORT ${PORT}🚀`);
