@@ -23,7 +23,11 @@ route.post("/v2", userController.login.bind(userController));
 
 //untuk selalu login (untuk front end)
 route.get("/token", userController.alwaysLogin.bind(userController));
-
+route.get(
+  "/dataEvents",
+  verifyToken1,
+  userController.viewPurchasedEvents.bind(userController)
+);
 // untuk verify user (hanya user yg udh verify yg bisa create events)
 route.post("/verify/", userController.verify.bind(userController));
 route.post(
