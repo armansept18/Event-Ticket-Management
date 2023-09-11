@@ -6,53 +6,60 @@ class Event extends Entity {
   constructor(model) {
     super(model);
   }
-  deleteById(req, res) {
-    const { id } = req.params;
-    db[this.model]
-      .destroy({
-        where: { id },
-      })
-      .then(() => res.send({ message: "success" }))
-      .catch((err) => res.status(500).send(err.message));
-  }
-  updateById(req, res) {
-    const { id } = req.params;
-    console.log(req.body);
-    db[this.model]
-      .update(
-        { ...req.body },
-        {
-          where: { id },
-        }
-      )
-      .then(() => this.getById(req, res))
-      .catch((err) => res.status(500).send(err.message));
-  }
-  editEvent(req, res) {
-    const { id } = req.params;
-    db.Event.update({ ...req.body }, { where: { id } })
-      .then((result) =>
-        res.send({ message: `EVENT ID ${id} SUCCESSFULLY EDITED!` })
-      )
-      .catch((err) => res.status(500).send(err?.message));
-  }
 
+  async editEvent(req, res) {
+    const { id } = req.params;
+    const eventData = req.body;
+    const { token } = req;
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized: User Not Logged In!" });
+    }
+    try {
+      const dataToken = jwt.verify(token, process.env.jwt_secret); // Define dataToken here
+
+      const existingEvent = await db.Event.findByPk(id);
+      if (!existingEvent) {
+        return res
+          .status(404)
+          .json({ message: `Event with ID ${id} not found!` });
+      }
+      if (existingEvent.userid !== dataToken.id) {
+        return res.status(403).json({
+          message: `Unauthorized: You are not the owner of this event!`,
+        });
+      }
+
+      await existingEvent.update({
+        ...eventData,
+      });
+      res.status(200).json({
+        message: `Event with ID ${id} successfully edited!`,
+        updatedEvent: existingEvent,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error?.message);
+    }
+  }
   async createEvent(req, res) {
     const { token } = req;
-    const dataToken = jwt.verify(token, process.env.jwt_secret);
-    const eventData = req.body;
+
+    if (!token) {
+      return res.status(401).send("Authentication token required");
+    }
     try {
-      const eventCreate = await db.Event.create({
-        ...eventData,
-        userid: dataToken.id,
-      }).then((result) => result);
-      db.Event.create({
-        ...eventData,
-        userid: dataToken.id,
-      })
-        .then((result) => res.send({ message: `EVENT CREATED!` }))
-        .catch((err) => res.status(500).send(err?.message, "tes"));
-      console.log(eventData);
+      const dataToken = jwt.verify(token, process.env.jwt_secret);
+      const eventData = req.body;
+
+      if (req.file) {
+        eventData.imageUrl = req.file.filename;
+      }
+      eventData.userid = dataToken.id;
+
+      const eventCreate = await db.Event.create(eventData);
       res.status(200).json({
         message: "Event Created!",
         eventCreate,
@@ -62,6 +69,38 @@ class Event extends Entity {
       res.status(500).send(err?.message);
     }
   }
+  async deleteEvent(req, res) {
+    const { id } = req.params;
+    const { token } = req;
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized: User Not Logged In!" });
+    }
+    try {
+      const dataToken = jwt.verify(token, process.env.jwt_secret);
+      const existingEvent = await db.Event.findByPk(id);
+      if (!existingEvent) {
+        return res
+          .status(404)
+          .json({ message: `Event with ID ${id} not found!` });
+      }
+      if (existingEvent.userid !== dataToken.id) {
+        return res.status(403).json({
+          message: `Unauthorized: You are not the owner of this event!`,
+        });
+      }
+      await existingEvent.destroy();
+      res
+        .status(200)
+        .json({ message: `Event with ID ${id} successfully deleted!` });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error?.message);
+    }
+  }
+
   getAllEventWithUser(req, res) {
     db.Event.findAll({
       include: { model: db.User, as: "user" },

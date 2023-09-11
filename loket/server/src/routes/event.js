@@ -38,7 +38,7 @@ route.patch(
 route.delete(
   "/:id",
   verifyToken1,
-  eventControllers.deleteById.bind(eventControllers)
+  eventControllers.deleteEvent.bind(eventControllers)
 );
 
 module.exports = route;

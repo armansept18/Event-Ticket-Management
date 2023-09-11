@@ -6,27 +6,36 @@ class Dashboard extends Entity {
   constructor(model) {
     super(model);
   }
-  async viewPurchasedEvents(req, res) {
+  async getEventsPurchasedByUser(req, res) {
     try {
-      const userId = req.user.id; // Mengambil ID user dari token yang diautentikasi
+      const userId = req.user.id;
 
-      // Menggunakan model acara (events) yang sesuai dengan aplikasi Anda
+      const Order = db.Order;
+
       const Event = db.Event;
 
-      // Mengambil semua acara (events) yang sudah dibeli oleh user dengan ID yang sesuai
-      const purchasedEvents = await Event.findAll({
+      const userOrders = await Order.findAll({
         where: {
-          userId: userId, // Sesuaikan dengan nama kolom yang digunakan di model Anda
+          userId: userId,
+          isPayment: true,
         },
       });
 
-      if (!purchasedEvents || purchasedEvents.length === 0) {
+      if (!userOrders || userOrders.length === 0) {
         return res
           .status(404)
           .send("Tidak ada acara yang dibeli oleh user ini.");
       }
 
-      // Mengirimkan daftar acara (events) yang sudah dibeli sebagai respons
+      const purchasedEvents = [];
+
+      for (const order of userOrders) {
+        const event = await Event.findByPk(order.eventId);
+        if (event) {
+          purchasedEvents.push(event);
+        }
+      }
+
       res.send({ purchasedEvents });
     } catch (err) {
       res.status(500).send(err.message);

@@ -49,7 +49,7 @@ class OrderEvents extends Entity {
   async createOrder(req, res) {
     try {
       const { eventId, quantity } = req.body;
-      const userId = req.user.id; // Ambil userId dari token
+      const userId = req.user.id;
 
       // check user
       const userData = await User.findByPk(userId);
@@ -69,7 +69,7 @@ class OrderEvents extends Entity {
 
       // create order
       const orderData = await Order.create({
-        userId, // Menggunakan userId dari token
+        userId,
         eventId,
         quantity,
         fullname: userData.fullname,
@@ -101,7 +101,7 @@ class OrderEvents extends Entity {
     try {
       const event = db.Event;
       const orderId = req.body.id;
-      const userId = req.user.id; // Pastikan user telah terotentikasi
+      const userId = req.user.id;
 
       // Cari data pesanan
       const orderData = await db.Order.findByPk(orderId);
@@ -156,7 +156,7 @@ class OrderEvents extends Entity {
   async payment1(req, res) {
     try {
       const orderId = req.body.id;
-      const userId = req.user.id; // Pastikan user telah terautentikasi
+      const userId = req.user.id;
       const referralCodeFromFriend = req.body.referralCodeFromFriend;
 
       // Cari data pesanan

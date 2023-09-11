@@ -8,6 +8,6 @@ const route = express.Router();
 route.get(
   "/",
   verifyToken1,
-  dashboardControllers.viewPurchasedEvents.bind(dashboardControllers)
+  dashboardControllers.getEventsPurchasedByUser.bind(dashboardControllers)
 );
 module.exports = route;
